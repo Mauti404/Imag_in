@@ -32,7 +32,4 @@
     </bean>
 
     <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager" />
-
-    
-
 </beans>
