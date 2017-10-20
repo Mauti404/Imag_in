@@ -36,15 +36,21 @@ public class ConnectionController {
     {
         String login=request.getParameter("login");
         String pass = request.getParameter("pass");
-        ModelAndView mv = new ModelAndView("connect");
+        
+        /*
+            gestion de la connection
+        */
+        
+        ModelAndView mv = new ModelAndView("wall");
         UserEntity u = uDao.find(login);
+        
         if(u==null){
-            u = new UserEntity(login,pass);
+            u = new UserEntity();
             uDao.save(u);
-            mv.addObject("connectMessage", "Utilisateur vient d'être inscrit ! Bonjour "+u.getLogin());
+            mv.addObject("userName", "Bonjour ");
             return mv;
         }
-        mv.addObject("connectMessage", "Utilisateur dejà inscrit ! Bonjour "+u.getLogin());
+        mv.addObject("userName", "Bonjour ");
         return mv;
     }
 }
