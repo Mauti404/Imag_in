@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import entities.UserDao;
+import entities.DAO.UserDao;
 import entities.UserEntity;
 
 /**
@@ -34,23 +34,19 @@ public class ConnectionController {
     @RequestMapping(value="connect", method=RequestMethod.POST)
     public ModelAndView connect(HttpServletRequest request, HttpServletResponse reponse)
     {
-        String login=request.getParameter("login");
+        String mail = request.getParameter("login");
         String pass = request.getParameter("pass");
-        
-        /*
-            gestion de la connection
-        */
-        
         ModelAndView mv = new ModelAndView("wall");
-        UserEntity u = uDao.find(login);
         
-        if(u==null){
-            u = new UserEntity();
-            uDao.save(u);
-            mv.addObject("userName", "Bonjour ");
-            return mv;
-        }
-        mv.addObject("userName", "Bonjour ");
+        
+        // POUR LE MOMENT, ON FAIT L'INSCRIPTION EN MEME TEMPS
+        
+        UserEntity user = new UserEntity(mail,pass);
+        uDao.save(user);
+        
+        user = uDao.find(user.getId());      
+        
+        mv.addObject("userName", "Bonjour " + " id : " + user.getId());
         return mv;
     }
 }

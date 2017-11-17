@@ -1,5 +1,6 @@
-package entities;
+package entities.DAO;
 
+import entities.UserEntity;
 import java.io.Serializable;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,12 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class UserDaoImpl implements UserDao {
+    
     @PersistenceContext
     private EntityManager em;
     
     public EntityManager getEm() {
         return em;
     }
+    
     public void setEm(EntityManager em) 
     {
         this.em = em;
@@ -30,8 +33,8 @@ public class UserDaoImpl implements UserDao {
     @Transactional
     public void save(UserEntity u)
     {
-            u = em.merge(u);
-            em.persist(u);
+        u = em.merge(u);
+        em.persist(u);
     }
     
     @Override
@@ -50,9 +53,9 @@ public class UserDaoImpl implements UserDao {
     
     @Override
     @Transactional
-    public UserEntity find(String login)
+    public UserEntity find(int id)
     {
-        UserEntity u = em.find(UserEntity.class, login);
+        UserEntity u = em.find(UserEntity.class, id);
         return u;
     }
 }

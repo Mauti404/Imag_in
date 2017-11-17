@@ -1,4 +1,6 @@
-package entities;
+package entities.DAO;
+
+import entities.UserEntity;
 
 /**
  *
@@ -8,5 +10,5 @@ public interface UserDao {
     public void save(UserEntity u);
     public void update(UserEntity u);
     public void delete(UserEntity u);
-    public UserEntity find(String login);
+    public UserEntity find(int id);
 }

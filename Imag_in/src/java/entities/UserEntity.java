@@ -3,6 +3,8 @@ package entities;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -16,10 +18,17 @@ public class UserEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    private String id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
     
     @Column
     private String password;
+    
+    @Column
+    private String prenom;
+    
+    @Column
+    private String nom;
 
     @Column
     private String profilPictureURL;
@@ -27,7 +36,70 @@ public class UserEntity implements Serializable {
     @Column
     private String lastConnection;
     
-    @Column
+    @Column(unique=true)
     private String email;
+    
+    // constructeur par defaut ... bug sans ça
+    public UserEntity() {
+        this.password = "mot de passe";
+        this.lastConnection = "today";
+        this.profilPictureURL = "head.png";
+        this.email = "test@imagin.com";
+        this.nom = "nom";
+        this.prenom = "prenom";
+    }
+    
+    public UserEntity(String mail,String password) {
+        this.password = password;
+        this.lastConnection = "today";
+        this.profilPictureURL = "head.png";
+        this.email = mail;
+        this.nom = "nom";
+        this.prenom = "prenom";
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getProfilPictureURL() {
+        return profilPictureURL;
+    }
+
+    public String getLastConnection() {
+        return lastConnection;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public String getNom() {
+        return nom;
+    }
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setProfilPictureURL(String profilPictureURL) {
+        this.profilPictureURL = profilPictureURL;
+    }
+
+    public void setLastConnection(String lastConnection) {
+        this.lastConnection = lastConnection;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
     
 }
