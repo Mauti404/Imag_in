@@ -23,12 +23,6 @@ public class UserEntity implements Serializable {
     
     @Column
     private String password;
-    
-    @Column
-    private String prenom;
-    
-    @Column
-    private String nom;
 
     @Column
     private String profilPictureURL;
@@ -45,8 +39,6 @@ public class UserEntity implements Serializable {
         this.lastConnection = "today";
         this.profilPictureURL = "head.png";
         this.email = "test@imagin.com";
-        this.nom = "nom";
-        this.prenom = "prenom";
     }
     
     public UserEntity(String mail,String password) {
@@ -54,8 +46,6 @@ public class UserEntity implements Serializable {
         this.lastConnection = "today";
         this.profilPictureURL = "head.png";
         this.email = mail;
-        this.nom = "nom";
-        this.prenom = "prenom";
     }
 
     public static long getSerialVersionUID() {
@@ -81,12 +71,6 @@ public class UserEntity implements Serializable {
     public String getEmail() {
         return email;
     }
-    public String getNom() {
-        return nom;
-    }
-    public String getPrenom() {
-        return prenom;
-    }
 
     public void setProfilPictureURL(String profilPictureURL) {
         this.profilPictureURL = profilPictureURL;
@@ -99,7 +83,4 @@ public class UserEntity implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
-    
 }

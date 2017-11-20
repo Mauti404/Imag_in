@@ -34,19 +34,38 @@ public class ConnectionController {
     @RequestMapping(value="connect", method=RequestMethod.POST)
     public ModelAndView connect(HttpServletRequest request, HttpServletResponse reponse)
     {
-        String mail = request.getParameter("login");
-        String pass = request.getParameter("pass");
-        ModelAndView mv = new ModelAndView("wall");
+        // on cherche l'utilisateur dans la bdd
+        //UserEntity user = uDao.find(user.getId());
+        
+        
         
         
         // POUR LE MOMENT, ON FAIT L'INSCRIPTION EN MEME TEMPS
         
+            
+        
+        ModelAndView mv = new ModelAndView("wall");
+        mv.addObject("userName", "Bonjour " + " id : ");
+        return mv;
+    }
+    
+    @RequestMapping(value="launchRegister", method=RequestMethod.POST)
+    public ModelAndView launchRegister(HttpServletRequest request, HttpServletResponse reponse)
+    {
+        return new ModelAndView("inscription");
+    }
+    
+    @RequestMapping(value="register", method=RequestMethod.POST)
+    public ModelAndView register(HttpServletRequest request, HttpServletResponse reponse)
+    {
+        String mail = request.getParameter("mail");
+        String pass = request.getParameter("pass");
+        
         UserEntity user = new UserEntity(mail,pass);
         uDao.save(user);
         
-        user = uDao.find(user.getId());      
-        
-        mv.addObject("userName", "Bonjour " + " id : " + user.getId());
+        ModelAndView mv = new ModelAndView("index");
+        mv.addObject("registerMessage", "<div class=\"alert alert-primary\" role=\"alert\">Register succesful !</div>");
         return mv;
     }
 }

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <HTML>
 <HEAD>
-<TITLE> Imag'In </TITLE>
+<TITLE> Register - Imag'In </TITLE>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"><!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -23,28 +23,19 @@
     	<div class="col-md-4 col-md-offset-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Please sign in</h3>
+                    <h3 class="panel-title">Register</h3>
                 </div>
                 <div class="panel-body">
-                    ${registerMessage}
-                    <form accept-charset="UTF-8" role="form" method="POST" ACTION="connect.htm">
+                    <form accept-charset="UTF-8" role="form" method="POST" ACTION="register.htm">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="login" name="login" type="text">
+                                <input class="form-control" placeholder="mail" name="mail" type="text">
                             </div>
                             <div class="form-group">
                                 <input class="form-control" placeholder="password" name="pass" type="password" value="">
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input name="remember" type="checkbox" value="Remember Me"> Remember Me
-                                </label>
-                            </div>
-                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                            <input class="btn btn-lg btn-success btn-block" type="submit">
                         </fieldset>
-                    </form>
-                    <form accept-charset="UTF-8" role="form" method="POST" action= "launchRegister.htm">
-                        <input class="btn btn-lg btn-dark btn-block" type="submit" value="Register" />
                     </form>
                 </div>
             </div>
