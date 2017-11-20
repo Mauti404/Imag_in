@@ -35,25 +35,22 @@ public class ConnectionController {
     public ModelAndView connect(HttpServletRequest request, HttpServletResponse reponse)
     {
         // on cherche l'utilisateur dans la bdd
-        //UserEntity user = uDao.find(user.getId());
+        UserEntity user = this.uDao.findByMail(request.getParameter("login"));
         
-        UserEntity user = this.uDao.findByMail(request.getParameter("mail"));
-        
-        if (user.getPassword().equals(request.getParameter("mail"))) {
+        if (user.getPassword().equals(request.getParameter("pass"))) {
             ModelAndView mv = new ModelAndView("wall");
             mv.addObject("userName", "Bonjour " + " id : ");
             return mv;
         }
-        
-            
-        
-        ModelAndView mv = new ModelAndView("wall");
-        mv.addObject("userName", "Bonjour " + " id : ");
-        return mv;
+        else {
+            ModelAndView mv = new ModelAndView("index");
+            mv.addObject("registerMessage", "<div class=\"alert alert-warning\" role=\"alert\">Register succesful !</div>");
+            return mv;
+        }
     }
     
     @RequestMapping(value="launchRegister", method=RequestMethod.POST)
-    public ModelAndView launchRegister(HttpServletRequest request, HttpServletResponse reponse)
+    public ModelAndView launchRegister()
     {
         return new ModelAndView("inscription");
     }
