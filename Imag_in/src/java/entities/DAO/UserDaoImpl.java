@@ -2,8 +2,10 @@ package entities.DAO;
 
 import entities.UserEntity;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,5 +59,12 @@ public class UserDaoImpl implements UserDao {
     {
         UserEntity u = em.find(UserEntity.class, id);
         return u;
+    }
+    
+    @Override
+    @Transactional
+    public UserEntity findByMail(String mail) {
+        TypedQuery<UserEntity> query = this.em.createQuery("SELECT u FROM UserEntity u WHERE u.email = :mail",UserEntity.class);
+        return query.setParameter("mail",mail).getSingleResult();
     }
 }

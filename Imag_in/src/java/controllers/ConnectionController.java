@@ -37,10 +37,13 @@ public class ConnectionController {
         // on cherche l'utilisateur dans la bdd
         //UserEntity user = uDao.find(user.getId());
         
+        UserEntity user = this.uDao.findByMail(request.getParameter("mail"));
         
-        
-        
-        // POUR LE MOMENT, ON FAIT L'INSCRIPTION EN MEME TEMPS
+        if (user.getPassword().equals(request.getParameter("mail"))) {
+            ModelAndView mv = new ModelAndView("wall");
+            mv.addObject("userName", "Bonjour " + " id : ");
+            return mv;
+        }
         
             
         
