@@ -1,11 +1,15 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -33,12 +37,16 @@ public class UserEntity implements Serializable {
     @Column(unique=true)
     private String email;
     
+    @OneToMany (mappedBy="sender")
+    private List<MessageEntity> messages;
+    
     // constructeur par defaut ... bug sans ça
     public UserEntity() {
         this.password = "mot de passe";
         this.lastConnection = "today";
         this.profilPictureURL = "head.png";
         this.email = "test@imagin.com";
+        this.messages = new ArrayList<>();
     }
     
     public UserEntity(String mail,String password) {
@@ -46,6 +54,7 @@ public class UserEntity implements Serializable {
         this.lastConnection = "today";
         this.profilPictureURL = "head.png";
         this.email = mail;
+        this.messages = new ArrayList<>();
     }
 
     public static long getSerialVersionUID() {
@@ -70,6 +79,10 @@ public class UserEntity implements Serializable {
 
     public String getEmail() {
         return email;
+    }
+    
+    public List<MessageEntity> getMessages() {
+        return this.messages;
     }
 
     public void setProfilPictureURL(String profilPictureURL) {

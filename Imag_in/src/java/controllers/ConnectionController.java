@@ -39,7 +39,9 @@ public class ConnectionController {
         
         if (user.getPassword().equals(request.getParameter("pass"))) {
             ModelAndView mv = new ModelAndView("wall");
-            mv.addObject("userName", "Bonjour " + " id : ");
+            mv.addObject("userName",user.getEmail());
+            mv.addObject("userName",user.getLastConnection());
+            
             return mv;
         }
         else {

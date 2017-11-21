@@ -1,7 +1,7 @@
 package entities.DAO;
 
+import entities.MessageEntity;
 import entities.UserEntity;
-import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -66,5 +66,11 @@ public class UserDaoImpl implements UserDao {
     public UserEntity findByMail(String mail) {
         TypedQuery<UserEntity> query = this.em.createQuery("SELECT u FROM UserEntity u WHERE u.email = :mail",UserEntity.class);
         return query.setParameter("mail",mail).getSingleResult();
+    }
+
+    @Override
+    public List<MessageEntity> findMessages(int id) {
+        TypedQuery<MessageEntity> query = this.em.createQuery("SELECT m FROM MessageEntity m WHERE m.sender = :userId ",MessageEntity.class);
+        return query.setParameter("userId",id).getResultList();
     }
 }

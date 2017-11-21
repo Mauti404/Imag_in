@@ -27,30 +27,29 @@ public class MessageEntity implements Serializable {
     @Column
     private String contentURL;
     
-    @ManyToOne // c'est ptêt pas ça
-    @JoinColumn(name="id")
-    private UserEntity user;
+    @ManyToOne // receiver
+    @JoinColumn(name="receiver")
+    private UserEntity receiver;
     
-    @OneToOne // c'est ptêt pas ça
-    @JoinColumn(name="id")
+    @ManyToOne // sender
+    @JoinColumn(name="sender")
     private UserEntity sender;
 
-    public MessageEntity(String contentURL, UserEntity user, UserEntity sender) {
+    public MessageEntity(String contentURL, UserEntity user) {
         this.contentURL = contentURL;
-        this.user = user;
-        this.sender = sender;
+        //this.user = user;
     }
 
     public void setContentURL(String contentURL) {
         this.contentURL = contentURL;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setSender(UserEntity user) {
+        this.sender = user;
     }
-
-    public void setSender(UserEntity sender) {
-        this.sender = sender;
+    
+    public void setReceiver(UserEntity user) {
+        this.receiver = user;
     }
 
     public static long getSerialVersionUID() {
@@ -65,13 +64,15 @@ public class MessageEntity implements Serializable {
         return contentURL;
     }
 
-    public UserEntity getUser() {
-        return user;
-    }
-
+    
     public UserEntity getSender() {
-        return sender;
+        return this.sender;
     }
+    
+    public UserEntity getReceiver() {
+        return this.receiver;
+    }
+    
     
     
 }
