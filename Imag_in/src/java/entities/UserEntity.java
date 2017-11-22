@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -39,6 +41,12 @@ public class UserEntity implements Serializable {
     @Column(unique=true)
     private String email;
     
+    @ManyToMany (fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinTable(name = "friends", 
+            joinColumns = @JoinColumn(name = "friend1", referencedColumnName = "id"), 
+            inverseJoinColumns = @JoinColumn(name = "friend2", referencedColumnName = "id"))
+    private List<UserEntity> friends;
+    
     @OneToMany (mappedBy="sender",cascade=CascadeType.ALL,fetch = FetchType.EAGER)
     private List<MessageEntity> messages;
     
@@ -48,6 +56,7 @@ public class UserEntity implements Serializable {
         this.profilPictureURL = "head.png";
         this.email = "test@imagin.com";
         this.messages = new ArrayList<>();
+        this.friends = new ArrayList<>();
     }
     
     public UserEntity(String mail,String password) {
@@ -56,6 +65,7 @@ public class UserEntity implements Serializable {
         this.profilPictureURL = "head.png";
         this.email = mail;
         this.messages = new ArrayList<>();
+        this.friends = new ArrayList<>();
     }
 
     public static long getSerialVersionUID() {
@@ -85,6 +95,10 @@ public class UserEntity implements Serializable {
     public List<MessageEntity> getMessages() {
         return this.messages;
     }
+    
+    public List<UserEntity> getFriends() {
+        return this.friends;
+    }
 
     public void setProfilPictureURL(String profilPictureURL) {
         this.profilPictureURL = profilPictureURL;
@@ -101,4 +115,10 @@ public class UserEntity implements Serializable {
     public void addMessage(MessageEntity m) {
         this.messages.add(m);
     }
+    
+    public void addFriend(UserEntity u) {
+        this.friends.add(u);
+    }
+    
+    
 }

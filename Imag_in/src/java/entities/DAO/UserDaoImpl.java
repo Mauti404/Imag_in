@@ -69,8 +69,18 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional
     public List<MessageEntity> findMessages(UserEntity user) {
         TypedQuery<MessageEntity> query = this.em.createQuery("SELECT m FROM MessageEntity m WHERE m.receiver = :user ",MessageEntity.class);
         return query.setParameter("user",user).getResultList();
     }
+    
+    @Override
+    @Transactional
+    public List<UserEntity> findFriends(UserEntity user) {
+        TypedQuery<UserEntity> query = this.em.createQuery("SELECT f FROM friends f WHERE f.friend1 = :user OR f.friend2 = :user ",UserEntity.class);
+        return query.setParameter("user",user).getResultList();
+    }
+    
+    
 }
