@@ -56,8 +56,11 @@ public class WallController {
         List<UserEntity> allCurrentUserFriend = this.uDao.findFriends(currentUser);
         message = "";
         
+        System.out.println("current " + currentUser.getId() + " nb friends : " + currentUser.getFriends().size());
+        
         for (UserEntity us : allCurrentUserFriend) {
             message = message + "<div>" + us.getId() + "</div>";
+            System.out.println("user " + us.getId() + " nb friends : " + us.getFriends().size());
         }
         
         mv.addObject("amis",message);
@@ -75,16 +78,49 @@ public class WallController {
         return this.loadWall(request);
     }
     
+    @RequestMapping(value="removeMessage", method=RequestMethod.POST)
+    public ModelAndView removeMessage(HttpServletRequest request, HttpServletResponse reponse)
+    {        
+        return this.loadWall(request);
+    }
+    
     @RequestMapping(value="addFriend", method=RequestMethod.POST)
     public ModelAndView addFriend(HttpServletRequest request, HttpServletResponse reponse)
     {
-        request.getParameter("friend");
         
         UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
         UserEntity friend = this.uDao.find(Integer.parseInt(request.getParameter("friend")));
         currentUser.addFriend(friend);
         friend.addFriend(currentUser);
+        
+        try {
+            this.uDao.update(currentUser);
+        }
+        catch (IllegalStateException ise) {
+            System.out.println("ERREUR A GERER : Déjà ami");
+        }
+        
+        
+        UserEntity find2 = this.uDao.find(1);
+        System.out.println("friend : " + find2.getFriends().size());
+        
+        return this.loadWall(request);
+    }
+    
+    @RequestMapping(value="removeFriend", method=RequestMethod.POST)
+    public ModelAndView removeFriend(HttpServletRequest request, HttpServletResponse reponse)
+    {
+        
+        UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
+        UserEntity friend = this.uDao.find(Integer.parseInt(request.getParameter("friend")));
+        currentUser.removeFriend(friend.getId());
+        friend.removeFriend(currentUser.getId());
+        
+        System.out.println("current " + currentUser.getId() + " nb friends : " + currentUser.getFriends().size());
+        System.out.println("friend " + friend.getId() + " nb friends : " + friend.getFriends().size());
+        
         this.uDao.update(currentUser);
+        this.uDao.update(friend);
         
         return this.loadWall(request);
     }

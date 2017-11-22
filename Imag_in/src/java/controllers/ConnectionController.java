@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.DAO.MessageDao;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import entities.DAO.UserDao;
+import entities.MessageEntity;
 import entities.UserEntity;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -27,10 +30,40 @@ public class ConnectionController {
         this.uDao = uDao;
     }
     
+    
     @RequestMapping(value="index", method=RequestMethod.GET)
     public String initIndex()
     {
         return "index";
+    }
+    
+    private ModelAndView loadWall (HttpServletRequest request) {
+        
+        UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");
+        ModelAndView mv = new ModelAndView("wall");
+        mv.addObject("userName",currentUser.getEmail());
+        mv.addObject("userConnection",currentUser.getLastConnection());
+        
+        List<MessageEntity> allCurrentUserMessage = this.uDao.findMessages(currentUser);
+        String message = "";
+        
+        for (MessageEntity mes : allCurrentUserMessage) {
+            message = message + "<div>" + mes.getContentURL() + "</div>";
+        }
+        
+        mv.addObject("messages",message);
+        
+        List<UserEntity> allCurrentUserFriend = this.uDao.findFriends(currentUser);
+        message = "";
+        
+        for (UserEntity us : allCurrentUserFriend) {
+            message = message + "<div>" + us.getId() + "</div>";
+            System.out.println("nb friends : " + us.getFriends().size());
+        }
+        
+        mv.addObject("amis",message);
+        
+        return mv;
     }
     
     @RequestMapping(value="connect", method=RequestMethod.POST)
@@ -47,11 +80,7 @@ public class ConnectionController {
             
             
             // on charge la page par default :  le mur
-            ModelAndView mv = new ModelAndView("wall");
-            mv.addObject("userName",user.getEmail());
-            mv.addObject("userConnection",user.getLastConnection());
-            
-            String message = "";
+            ModelAndView mv = loadWall(request);
             
             mv.addObject("messages","LES MESSAGES ICI");
             return mv;

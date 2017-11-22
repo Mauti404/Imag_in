@@ -116,8 +116,25 @@ public class UserEntity implements Serializable {
         this.messages.add(m);
     }
     
+    public void removeMessage(MessageEntity m) {        
+        this.messages.remove(m);
+    }
+    
+    
     public void addFriend(UserEntity u) {
         this.friends.add(u);
+    }
+    
+    public void removeFriend(int friendId) {
+        UserEntity toRemove = null;
+        
+        for(UserEntity friend : this.friends) {
+            if (friend.getId() == friendId) {
+                toRemove = friend;
+            }
+        }
+        
+        this.friends.remove(toRemove);
     }
     
     

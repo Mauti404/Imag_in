@@ -21,6 +21,24 @@
                 <input type="submit">
             </fieldset>
         </form>
+        <form accept-charset="UTF-8" role="form" method="POST" ACTION="removeMessage.htm">
+            <fieldset>
+                <input placeholder="message" name="message" type="text">
+                <input type="submit">
+            </fieldset>
+        </form>
+        <form accept-charset="UTF-8" role="form" method="POST" ACTION="addFriend.htm">
+            <fieldset>
+                <input placeholder="friend" name="friend" type="text">
+                <input type="submit">
+            </fieldset>
+        </form>
+        <form accept-charset="UTF-8" role="form" method="POST" ACTION="removeFriend.htm">
+            <fieldset>
+                <input placeholder="friend" name="friend" type="text">
+                <input type="submit">
+            </fieldset>
+        </form>
     </div>
     <div>
         Dernière connection : ${userConnection}
@@ -30,6 +48,12 @@
     </div>
     <div>
         ${messages}
+    </div>
+    <div>
+        <b>Amis :</b>
+    </div>
+    <div>
+        ${amis}
     </div>
     
 </BODY>
