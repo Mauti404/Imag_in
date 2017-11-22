@@ -8,12 +8,16 @@ package entities.DAO;
 import entities.MessageEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author mauti
  */
+
+@Repository
+@Transactional
 public class MessageDaoImpl implements MessageDao {
     
     @PersistenceContext

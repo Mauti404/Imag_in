@@ -14,5 +14,5 @@ public interface UserDao {
     public void delete(UserEntity u);
     public UserEntity find(int id);
     public UserEntity findByMail(String mail);
-    public List<MessageEntity> findMessages(int id);
+    public List<MessageEntity> findMessages(UserEntity user);
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import entities.DAO.UserDao;
 import entities.UserEntity;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -17,6 +18,7 @@ import entities.UserEntity;
 
 @Controller
 public class ConnectionController {
+    
     @Autowired
     private UserDao uDao;
     
@@ -38,10 +40,20 @@ public class ConnectionController {
         UserEntity user = this.uDao.findByMail(request.getParameter("login"));
         
         if (user.getPassword().equals(request.getParameter("pass"))) {
+            
+            // on créé une session
+            HttpSession session = request.getSession();
+            session.setAttribute("user",user);
+            
+            
+            // on charge la page par default :  le mur
             ModelAndView mv = new ModelAndView("wall");
             mv.addObject("userName",user.getEmail());
-            mv.addObject("userName",user.getLastConnection());
+            mv.addObject("userConnection",user.getLastConnection());
             
+            String message = "";
+            
+            mv.addObject("messages","LES MESSAGES ICI");
             return mv;
         }
         else {

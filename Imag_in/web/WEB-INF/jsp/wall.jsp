@@ -8,8 +8,29 @@
 <TITLE> Imag'In </TITLE>
 </HEAD>
 <BODY>
-    <div class="panel-body">
+    <div>
+        <b>User :</b>
+    </div>
+    <div>
         ${userName}
     </div>
+    <div>
+        <form accept-charset="UTF-8" role="form" method="POST" ACTION="sendMessage.htm">
+            <fieldset>
+                <input placeholder="message" name="message" type="text">
+                <input type="submit">
+            </fieldset>
+        </form>
+    </div>
+    <div>
+        Dernière connection : ${userConnection}
+    </div>
+    <div>
+        <b>Messages :</b>
+    </div>
+    <div>
+        ${messages}
+    </div>
+    
 </BODY>
 </HTML>

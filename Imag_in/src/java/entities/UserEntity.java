@@ -3,8 +3,10 @@ package entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,10 +39,9 @@ public class UserEntity implements Serializable {
     @Column(unique=true)
     private String email;
     
-    @OneToMany (mappedBy="sender")
+    @OneToMany (mappedBy="sender",cascade=CascadeType.ALL,fetch = FetchType.EAGER)
     private List<MessageEntity> messages;
     
-    // constructeur par defaut ... bug sans ça
     public UserEntity() {
         this.password = "mot de passe";
         this.lastConnection = "today";
@@ -95,5 +96,9 @@ public class UserEntity implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public void addMessage(MessageEntity m) {
+        this.messages.add(m);
     }
 }

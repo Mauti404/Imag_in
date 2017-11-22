@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -35,9 +34,14 @@ public class MessageEntity implements Serializable {
     @JoinColumn(name="sender")
     private UserEntity sender;
 
-    public MessageEntity(String contentURL, UserEntity user) {
+    public MessageEntity() {
+        contentURL = "";
+    }
+    
+    public MessageEntity(String contentURL, UserEntity sender, UserEntity receiver) {
         this.contentURL = contentURL;
-        //this.user = user;
+        this.sender = sender;
+        this.receiver = receiver;
     }
 
     public void setContentURL(String contentURL) {
