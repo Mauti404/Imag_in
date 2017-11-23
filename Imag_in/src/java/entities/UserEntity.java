@@ -12,8 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 /**
  *
@@ -40,6 +42,16 @@ public class UserEntity implements Serializable {
     
     @Column(unique=true)
     private String email;
+    
+    @Lob
+    @Column
+    private byte[] profilePic;
+    
+    @Column(name="extprofil")
+    private String extprofil;
+    
+    @Transient
+    private String base64Profil;
     
     @ManyToMany (fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinTable(name = "friends", 
@@ -136,6 +148,28 @@ public class UserEntity implements Serializable {
         
         this.friends.remove(toRemove);
     }
-    
-    
+
+    public byte[] getProfilePic() {
+        return profilePic;
+    }
+
+    public String getExtprofil() {
+        return extprofil;
+    }
+
+    public String getBase64Profil() {
+        return base64Profil;
+    }
+
+    public void setProfilePic(byte[] profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    public void setExtprofil(String extprofil) {
+        this.extprofil = extprofil;
+    }
+
+    public void setBase64Profil(String base64Profil) {
+        this.base64Profil = base64Profil;
+    }
 }
