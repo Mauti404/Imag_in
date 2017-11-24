@@ -5,10 +5,6 @@ import entities.DAO.UserDao;
 import entities.MessageEntity;
 import entities.UserEntity;
 import java.io.IOException;
-import java.util.Base64;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import services.WallService;
 
 /**
  *
@@ -33,48 +30,8 @@ public class WallController {
     @Autowired
     private MessageDao mDao;
     
-    public void setUdao(UserDao uDao)
-    {
-        this.uDao = uDao;
-    }
-    
-    public void setMdao(MessageDao mDao)
-    {
-        this.mDao = mDao;
-    }
-    
-    private ModelAndView loadWall (HttpServletRequest request) {
-        
-        UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");
-        ModelAndView mv = new ModelAndView("wall");
-        mv.addObject("userName",currentUser.getEmail());
-        mv.addObject("userConnection",currentUser.getLastConnection());
-        
-        List<MessageEntity> allCurrentUserMessage = this.uDao.findMessages(currentUser);
-        String message = "";
-        
-        for (MessageEntity mes : allCurrentUserMessage) {
-            message = message + "<div>" + mes.getContentURL() + "</div>";
-        }
-        
-        mv.addObject("messages",message);
-        
-        List<UserEntity> allCurrentUserFriend = this.uDao.findFriends(currentUser);
-        message = "";
-        
-        for (UserEntity us : allCurrentUserFriend) {
-            message = message + "<div>" + us.getId() + "</div>";
-        }
-        
-        mv.addObject("amis",message);
-        
-        currentUser.setBase64Profil(Base64.getEncoder().encodeToString(currentUser.getProfilePic()));
-        mv.addObject("ProfilPic", currentUser.getBase64Profil());
-        mv.addObject("Extension", currentUser.getExtprofil());
-        
-        
-        return mv;
-    }
+    @Autowired 
+    private WallService wallService;
     
     @RequestMapping(value="sendMessage", method=RequestMethod.POST)
     public ModelAndView postMessageToWall(HttpServletRequest request, HttpServletResponse reponse)
@@ -83,13 +40,13 @@ public class WallController {
         currentUser.addMessage(new MessageEntity(request.getParameter("message"),currentUser,currentUser));
         this.uDao.update(currentUser);
         
-        return this.loadWall(request);
+        return this.wallService.loadWall(request);
     }
     
     @RequestMapping(value="removeMessage", method=RequestMethod.POST)
     public ModelAndView removeMessage(HttpServletRequest request, HttpServletResponse reponse)
     {        
-        return this.loadWall(request);
+        return this.wallService.loadWall(request);
     }
     
     @RequestMapping(value="addFriend", method=RequestMethod.POST)
@@ -112,7 +69,7 @@ public class WallController {
         UserEntity find2 = this.uDao.find(1);
         System.out.println("friend : " + find2.getFriends().size());
         
-        return this.loadWall(request);
+        return this.wallService.loadWall(request);
     }
     
     @RequestMapping(value="removeFriend", method=RequestMethod.POST)
@@ -130,7 +87,7 @@ public class WallController {
         this.uDao.update(currentUser);
         this.uDao.update(friend);
         
-        return this.loadWall(request);
+        return this.wallService.loadWall(request);
     }
     
     @RequestMapping(value="addProfilPict", method=RequestMethod.POST)
@@ -148,6 +105,6 @@ public class WallController {
         
         this.uDao.update(currentUser);
         
-        return this.loadWall(request);
+        return this.wallService.loadWall(request);
     }
 }
