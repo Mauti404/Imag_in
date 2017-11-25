@@ -4,10 +4,12 @@
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <jta-data-source>jdbc/sample</jta-data-source>
     <class>entities.UserEntity</class>
+    <class>entities.MessageEntity</class>
+    <class>entities.NotificationEntity</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
       <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

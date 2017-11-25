@@ -5,6 +5,8 @@ import entities.DAO.UserDao;
 import entities.MessageEntity;
 import entities.UserEntity;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +36,18 @@ public class WallController {
     private WallService wallService;
     
     @RequestMapping(value="sendMessage", method=RequestMethod.POST)
-    public ModelAndView postMessageToWall(HttpServletRequest request, HttpServletResponse reponse)
+    public ModelAndView postMessageToWall(HttpServletRequest request, HttpServletResponse reponse,@RequestParam("profil_pic") MultipartFile file)
     {        
         UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");
-        currentUser.addMessage(new MessageEntity(request.getParameter("message"),currentUser,currentUser));
+        MessageEntity message = new MessageEntity(currentUser,currentUser);
+        try {
+            message.setContent((byte[]) file.getBytes());
+        } catch (IOException ex) {
+            /* A GERER */
+            System.out.println("Pas d'image");
+        }
+        message.setExtContent(file.getContentType());
+        currentUser.addMessage(message);
         this.uDao.update(currentUser);
         
         return this.wallService.loadWall(request);

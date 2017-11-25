@@ -23,6 +23,7 @@ public class WallService {
     public ModelAndView loadWall (HttpServletRequest request) {
         
         UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");
+        
         ModelAndView mv = new ModelAndView("wall");
         mv.addObject("userName",currentUser.getEmail());
         mv.addObject("userConnection",currentUser.getLastConnection());
@@ -31,7 +32,11 @@ public class WallService {
         String message = "";
         
         for (MessageEntity mes : allCurrentUserMessage) {
-            message = message + "<div>" + mes.getContentURL() + "</div>";
+            
+            if (mes.getContent() != null) {
+                mes.setBase64Content(Base64.getEncoder().encodeToString(mes.getContent()));
+                message = message + "<img class=\"\" id=\"\" src=\"data:" + mes.getExtContent() +";base64," + mes.getBase64Content() + "\" alt=\"\">";
+            }
         }
         
         mv.addObject("messages",message);
@@ -45,9 +50,14 @@ public class WallService {
         
         mv.addObject("amis",message);
         
-        currentUser.setBase64Profil(Base64.getEncoder().encodeToString(currentUser.getProfilePic()));
-        mv.addObject("ProfilPic", currentUser.getBase64Profil());
-        mv.addObject("Extension", currentUser.getExtprofil());
+        if (currentUser.getProfilePic() == null) {
+            System.out.println("pas d'image de profil");
+        }
+        else {
+            currentUser.setBase64Profil(Base64.getEncoder().encodeToString(currentUser.getProfilePic()));
+            mv.addObject("ProfilPic", currentUser.getBase64Profil());
+            mv.addObject("Extension", currentUser.getExtprofil());
+        }
         
         return mv;
     }
