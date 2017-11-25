@@ -19,6 +19,7 @@
     <mvc:annotation-driven />
     <context:component-scan base-package="controllers"/>
     <context:component-scan base-package="entities"/>
+    <context:component-scan base-package="services"/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
     
     <!-- to inject instances of EntityManager using @PersistenceContext annotation -->

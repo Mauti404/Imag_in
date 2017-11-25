@@ -13,6 +13,7 @@ import entities.MessageEntity;
 import entities.UserEntity;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import services.WallService;
 
 /**
  *
@@ -25,45 +26,14 @@ public class ConnectionController {
     @Autowired
     private UserDao uDao;
     
-    public void setUdao(UserDao uDao)
-    {
-        this.uDao = uDao;
-    }
+    @Autowired 
+    private WallService wallService;
     
     
     @RequestMapping(value="index", method=RequestMethod.GET)
     public String initIndex()
     {
         return "index";
-    }
-    
-    private ModelAndView loadWall (HttpServletRequest request) {
-        
-        UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");
-        ModelAndView mv = new ModelAndView("wall");
-        mv.addObject("userName",currentUser.getEmail());
-        mv.addObject("userConnection",currentUser.getLastConnection());
-        
-        List<MessageEntity> allCurrentUserMessage = this.uDao.findMessages(currentUser);
-        String message = "";
-        
-        for (MessageEntity mes : allCurrentUserMessage) {
-            message = message + "<div>" + mes.getContentURL() + "</div>";
-        }
-        
-        mv.addObject("messages",message);
-        
-        List<UserEntity> allCurrentUserFriend = this.uDao.findFriends(currentUser);
-        message = "";
-        
-        for (UserEntity us : allCurrentUserFriend) {
-            message = message + "<div>" + us.getId() + "</div>";
-            System.out.println("nb friends : " + us.getFriends().size());
-        }
-        
-        mv.addObject("amis",message);
-        
-        return mv;
     }
     
     @RequestMapping(value="connect", method=RequestMethod.POST)
@@ -78,9 +48,12 @@ public class ConnectionController {
             HttpSession session = request.getSession();
             session.setAttribute("user",user);
             
+            if (request == null) {
+                System.out.println("test");
+            }
             
             // on charge la page par default :  le mur
-            ModelAndView mv = loadWall(request);
+            ModelAndView mv = this.wallService.loadWall(request);
             
             mv.addObject("messages","LES MESSAGES ICI");
             return mv;

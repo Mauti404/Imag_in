@@ -7,7 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 /**
  *
@@ -22,9 +24,16 @@ public class MessageEntity implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
-    
+
+    @Lob
     @Column
-    private String contentURL;
+    private byte[] content;
+    
+    @Column(name="extprofil")
+    private String extContent;
+    
+    @Transient
+    private String base64Content;
     
     @ManyToOne // receiver
     @JoinColumn(name="receiver")
@@ -35,17 +44,11 @@ public class MessageEntity implements Serializable {
     private UserEntity sender;
 
     public MessageEntity() {
-        contentURL = "";
     }
     
-    public MessageEntity(String contentURL, UserEntity sender, UserEntity receiver) {
-        this.contentURL = contentURL;
+    public MessageEntity(UserEntity sender, UserEntity receiver) {
         this.sender = sender;
         this.receiver = receiver;
-    }
-
-    public void setContentURL(String contentURL) {
-        this.contentURL = contentURL;
     }
 
     public void setSender(UserEntity user) {
@@ -63,11 +66,6 @@ public class MessageEntity implements Serializable {
     public int getId() {
         return id;
     }
-
-    public String getContentURL() {
-        return contentURL;
-    }
-
     
     public UserEntity getSender() {
         return this.sender;
@@ -76,6 +74,32 @@ public class MessageEntity implements Serializable {
     public UserEntity getReceiver() {
         return this.receiver;
     }
+
+    public byte[] getContent() {
+        return content;
+    }
+
+    public String getExtContent() {
+        return extContent;
+    }
+
+    public String getBase64Content() {
+        return base64Content;
+    }
+
+    public void setContent(byte[] content) {
+        this.content = content;
+    }
+
+    public void setExtContent(String extContent) {
+        this.extContent = extContent;
+    }
+
+    public void setBase64Content(String base64Content) {
+        this.base64Content = base64Content;
+    }
+    
+    
     
     
     
