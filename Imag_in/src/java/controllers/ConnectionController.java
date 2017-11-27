@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.DAO.MessageDao;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import entities.DAO.UserDao;
-import entities.MessageEntity;
 import entities.UserEntity;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
+import org.apache.derby.client.am.SqlException;
 import services.WallService;
 
 /**
@@ -42,6 +42,12 @@ public class ConnectionController {
         // on cherche l'utilisateur dans la bdd
         UserEntity user = this.uDao.findByMail(request.getParameter("login"));
         
+        if (user == null) {
+            ModelAndView mv = new ModelAndView("index");
+            mv.addObject("registerMessage", "<div class=\"alert alert-warning\" role=\"alert\">Mauvais login</div>");
+            return mv;
+        }
+        
         if (user.getPassword().equals(request.getParameter("pass"))) {
             
             // on créé une session
@@ -60,7 +66,7 @@ public class ConnectionController {
         }
         else {
             ModelAndView mv = new ModelAndView("index");
-            mv.addObject("registerMessage", "<div class=\"alert alert-warning\" role=\"alert\">Register succesful !</div>");
+            mv.addObject("registerMessage", "<div class=\"alert alert-warning\" role=\"alert\">Mauvais mot de passe</div>");
             return mv;
         }
     }
@@ -78,10 +84,17 @@ public class ConnectionController {
         String pass = request.getParameter("pass");
         
         UserEntity user = new UserEntity(mail,pass);
-        uDao.save(user);
+        try {
+            uDao.save(user);
+            ModelAndView mv = new ModelAndView("index");
+            mv.addObject("registerMessage", "<div class=\"alert alert-primary\" role=\"alert\">Register succesful !</div>");
+            return mv;
+        } catch (Exception ex) {
+            ModelAndView mv = new ModelAndView("inscription");
+            mv.addObject("registerMessage", "<div class=\"alert alert-primary\" role=\"alert\">Erreur lors de la sauvegarde !</div>");
+            return mv;
+        }
         
-        ModelAndView mv = new ModelAndView("index");
-        mv.addObject("registerMessage", "<div class=\"alert alert-primary\" role=\"alert\">Register succesful !</div>");
-        return mv;
+        
     }
 }
