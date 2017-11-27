@@ -22,26 +22,34 @@ public class WallService {
     
     public ModelAndView loadWall (HttpServletRequest request) {
         
-        UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");
-        
+        UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");//the connected user
+        UserEntity profile = (UserEntity) request.getSession().getAttribute("profile");//the wall user
         ModelAndView mv = new ModelAndView("wall");
         mv.addObject("userName",currentUser.getEmail());
-        mv.addObject("userConnection",currentUser.getLastConnection());
+        mv.addObject("profileName",profile.getEmail());
+        mv.addObject("userConnection",profile.getLastConnection());
         
-        List<MessageEntity> allCurrentUserMessage = this.uDao.findMessages(currentUser);
-        String message = "";
+        List<MessageEntity> allCurrentUserMessage = this.uDao.findMessages(profile);
+        String message = "<p>Liste des messages :</p>\n";
         
         for (MessageEntity mes : allCurrentUserMessage) {
             
             if (mes.getContent() != null) {
                 mes.setBase64Content(Base64.getEncoder().encodeToString(mes.getContent()));
-                message = message + "<img class=\"\" id=\"\" src=\"data:" + mes.getExtContent() +";base64," + mes.getBase64Content() + "\" alt=\"\">";
+                message += "<div>\n";
+                message += "<p>Sender : ";
+                message += (mes.getSender().getEmail() +"</p>\n");
+                message += "<p>Content : ";
+                message += ("<img class=\"\" id=\"\" src=\"data:" + mes.getExtContent() +";base64," + mes.getBase64Content() + "\" alt=\"\">" +"</p>\n");//faudrait faire un canva et ecrire directement dedans l'image ...
+                message += "</div>";
+                
             }
         }
         
-        mv.addObject("messages",message);
+        //mv.addObject("messages",message);//ça marche pas
+        mv.addObject("messagesList",message);
         
-        List<UserEntity> allCurrentUserFriend = this.uDao.findFriends(currentUser);
+        List<UserEntity> allCurrentUserFriend = this.uDao.findFriends(profile);
         message = "";
         
         for (UserEntity us : allCurrentUserFriend) {
@@ -51,12 +59,20 @@ public class WallService {
         mv.addObject("amis",message);
         
         if (currentUser.getProfilePic() == null) {
-            System.out.println("pas d'image de profil");
+            System.out.println("pas d'image de profil pour l'utilisateur");
         }
         else {
             currentUser.setBase64Profil(Base64.getEncoder().encodeToString(currentUser.getProfilePic()));
-            mv.addObject("ProfilPic", currentUser.getBase64Profil());
-            mv.addObject("Extension", currentUser.getExtprofil());
+            mv.addObject("UserPic", currentUser.getBase64Profil());
+            mv.addObject("UserExtension", currentUser.getExtprofil());
+        }
+        if (profile.getProfilePic() == null) {
+            System.out.println("pas d'image de profil pour ce mur");
+        }
+        else {
+            profile.setBase64Profil(Base64.getEncoder().encodeToString(currentUser.getProfilePic()));
+            mv.addObject("ProfilPic", profile.getBase64Profil());
+            mv.addObject("ProfilExtension", profile.getExtprofil());
         }
         
         return mv;

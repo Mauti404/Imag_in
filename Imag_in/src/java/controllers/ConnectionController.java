@@ -46,7 +46,8 @@ public class ConnectionController {
             
             // on créé une session
             HttpSession session = request.getSession();
-            session.setAttribute("user",user);
+            session.setAttribute("user",user);//the connected user
+            session.setAttribute("profile",user);//the user we see in the page
             
             if (request == null) {
                 System.out.println("test");
@@ -55,7 +56,7 @@ public class ConnectionController {
             // on charge la page par default :  le mur
             ModelAndView mv = this.wallService.loadWall(request);
             
-            mv.addObject("messages","LES MESSAGES ICI");
+            //mv.addObject("messages","LES MESSAGES ICI");
             return mv;
         }
         else {

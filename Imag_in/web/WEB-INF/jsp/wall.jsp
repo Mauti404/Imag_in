@@ -18,7 +18,7 @@
 </HEAD>
 <BODY class="w3-theme-l5">
     <!-- Navbar -->
-    <div class="w3-top">
+    
      <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
       <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
       <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Logo</a>
@@ -35,7 +35,7 @@
       </div>
       <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account"><img src="/w3images/avatar2.png" class="w3-circle" style="height:25px;width:25px" alt="Avatar"></a>
      </div>
-    </div>
+    
 
     <!-- Navbar on small screens -->
     <div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
@@ -49,18 +49,12 @@
     
     
     <div>
-        <b>User :</b>
+        <b>User : ${userName}</b>
     </div>
     <div>
-        ${userName}
-    </div>
-    <div>
-        <form accept-charset="UTF-8" role="form" method="POST" ACTION="sendMessage.htm">
-            <fieldset>
-                <input placeholder="message" name="message" type="text">
-                <input type="submit">
-            </fieldset>
-        </form>
+        
+        
+        
         <form accept-charset="UTF-8" role="form" method="POST" ACTION="removeMessage.htm">
             <fieldset>
                 <input placeholder="message" name="message" type="text">
@@ -85,10 +79,15 @@
     </div>
     <div>
         <b>Messages :</b>
+        <form accept-charset="UTF-8" role="form" method="POST" ACTION="sendMessage.htm">
+            <fieldset>
+                <input placeholder="Ecrire un nouveau message" name="message" type="text">
+                <input type="submit">
+            </fieldset>
+        </form>
+        ${messagesList}
     </div>
-    <div>
-        ${messages}
-    </div>
+    
     <div>
         <b>Amis :</b>
     </div>
