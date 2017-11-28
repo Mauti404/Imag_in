@@ -6,6 +6,10 @@ import entities.MessageEntity;
 import entities.UserEntity;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,20 +39,20 @@ public class WallController {
     private WallService wallService;
     
     @RequestMapping(value="sendMessage", method=RequestMethod.POST)
-    public ModelAndView postMessageToWall(HttpServletRequest request, HttpServletResponse reponse,@RequestParam("profil_pic") MultipartFile file)
+    public ModelAndView postMessageToWall(HttpServletRequest request, HttpServletResponse reponse)
     {        
-        UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");
-        MessageEntity message = new MessageEntity(currentUser,currentUser);
-        try {
-            message.setContent((byte[]) file.getBytes());
-        } catch (IOException ex) {
-            /* A GERER */
-            System.out.println("Pas d'image");
-        }
-        message.setExtContent(file.getContentType());
-        currentUser.addMessage(message);
-        this.uDao.update(currentUser);
+        UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
+        UserEntity profileUser = (UserEntity)request.getSession().getAttribute("profile");
+        MessageEntity message = new MessageEntity(currentUser,profileUser);
         
+        byte[] encodedBytes = Base64.getEncoder().encode(request.getParameter("hidden_data").substring(22).getBytes());
+        message.setContent(encodedBytes);
+        message.setPictureType("drawing");
+        message.setExtContent("image/png");
+        profileUser.addMessage(message);
+        
+        this.mDao.save(message);
+
         return this.wallService.loadWall(request);
     }
     
@@ -63,7 +67,7 @@ public class WallController {
     {
         
         UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
-        UserEntity friend = this.uDao.find(Integer.parseInt(request.getParameter("friend")));
+        UserEntity friend = this.uDao.find(Integer.parseInt(request.getParameter("ami")));
         currentUser.addFriend(friend);
         friend.addFriend(currentUser);
         
@@ -73,7 +77,6 @@ public class WallController {
         catch (IllegalStateException ise) {
             System.out.println("ERREUR A GERER : Déjà ami");
         }
-        
         
         UserEntity find2 = this.uDao.find(1);
         

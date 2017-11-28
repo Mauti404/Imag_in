@@ -42,6 +42,9 @@ public class MessageEntity implements Serializable {
     @ManyToOne // sender
     @JoinColumn(name="sender")
     private UserEntity sender;
+    
+    @Column
+    private String pictureType;
 
     public MessageEntity() {
     }
@@ -98,6 +101,15 @@ public class MessageEntity implements Serializable {
     public void setBase64Content(String base64Content) {
         this.base64Content = base64Content;
     }
+
+    public String getPictureType() {
+        return pictureType;
+    }
+
+    public void setPictureType(String pictureType) {
+        this.pictureType = pictureType;
+    }
+    
     
     
     

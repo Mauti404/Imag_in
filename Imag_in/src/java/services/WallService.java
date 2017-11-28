@@ -51,16 +51,15 @@ public class WallService {
         String message = "<p>Liste des messages :</p>\n";
         
         for (MessageEntity mes : allCurrentUserMessage) {
-            
-            if (mes.getContent() != null) {
+            System.out.println("test messages");
+            if (mes.getPictureType().equals("picture")) {
                 mes.setBase64Content(Base64.getEncoder().encodeToString(mes.getContent()));
-                message += "<div>\n";
-                message += "<p>Sender : ";
-                message += (mes.getSender().getEmail() +"</p>\n");
-                message += "<p>Content : ";
-                message += ("<img class=\"\" id=\"\" src=\"data:" + mes.getExtContent() +";base64," + mes.getBase64Content() + "\" alt=\"\">" +"</p>\n");//faudrait faire un canva et ecrire directement dedans l'image ...
-                message += "</div>";
-                
+                message += "<img src=\"data:" + mes.getExtContent() + ";base64," + mes.getBase64Content() + "\" alt=\"avatar\" />";
+            }
+            else if (mes.getPictureType().equals("drawing")) {
+                byte[] decodedBytes = Base64.getDecoder().decode(mes.getContent());
+                mes.setBase64Content(new String(decodedBytes));
+                message += "<img src=\"data:" + mes.getExtContent() + ";base64," + mes.getBase64Content() + "\" alt=\"avatar\" />";
             }
         }
         
@@ -72,6 +71,10 @@ public class WallService {
         
         for (UserEntity us : allCurrentUserFriend) {
             message = message + "<div>" + us.getId() + "</div>";
+            
+            if(us.findFriendById(currentUser.getId())) {
+                message += "<div>deja amis</div>";
+            }
         }
         
         mv.addObject("amis",message);      

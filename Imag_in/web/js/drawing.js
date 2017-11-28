@@ -5,25 +5,16 @@ window.onload = function() {
 			'Color',
 			{ Size: { type: 'dropdown' } },
 			{ DrawingMode: { filler: false } },
-			'Navigation',
-			'Download'
+			'Navigation'
 		],
 		size: 0.5,
 		webStorage: 'session',
 		enlargeYourContainer: true
 	});
 
-	//There are multiple ways to add a control to a board after its initialization:
-	customBoard.addControl('Download'); //if the DrawingBoard.Control.Download class exists
-
-	//or...
-	//var downloadControl = new DrawingBoard.Control.Download(customBoard).addToBoard();
-
-	//or...
-	//var downloadControl = new DrawingBoard.Control.Download(customBoard);
+	customBoard.addControl('Download');
 
 	$('.changeImg').on('submit', function(e) {
-		var canvas = document.getElementById('canvas');
 	   //get drawingboard content
 	  var img = customBoard.getImg();
 	  
@@ -38,6 +29,37 @@ window.onload = function() {
 	  //but the best would be to do when the server answers that everything went well
 	  customBoard.clearWebStorage();
 	});
+
+	var messageBoard = new DrawingBoard.Board('writeMessageBoard', {
+		controls: [
+			'Color',
+			{ Size: { type: 'dropdown' } },
+			{ DrawingMode: { filler: false } },
+			'Navigation'
+		],
+		size: 0.5,
+		webStorage: 'session',
+		enlargeYourContainer: true
+	});
+
+	messageBoard.addControl('Download');
+
+	$('.writeMessage').on('submit', function(e) {
+	   //get drawingboard content
+	  var img = messageBoard.getImg();
+	  
+	  //we keep drawingboard content only if it's not the 'blank canvas'
+	  var imgInput = (messageBoard.blankCanvas == img) ? '' : img;
+	  
+	  //put the drawingboard content in the form field to send it to the server
+	  $(this).find('input[name=hidden_data]').val(imgInput);
+
+	  //we can also assume that everything goes well server-side
+	  //and directly clear webstorage here so that the drawing isn't shown again after form submission
+	  //but the best would be to do when the server answers that everything went well
+	  messageBoard.clearWebStorage();
+	});
+	
 
 	/*
 	var button = document.getElementById("formTest");

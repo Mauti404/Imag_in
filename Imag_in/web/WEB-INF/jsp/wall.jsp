@@ -74,21 +74,30 @@
     </div>
     <div>
         <b>Messages :</b>
-        <form accept-charset="UTF-8" role="form" method="POST" ACTION="sendMessage.htm">
-            <fieldset>
-                <input placeholder="Ecrire un nouveau message" name="message" type="text">
-                <input type="submit">
-            </fieldset>
-        </form>
         ${messagesList}
     </div>
-    
+    <form accept-charset="UTF-8" role="form" method="POST" ACTION="addFriend.htm">
+        <fieldset>
+            <input placeholder="AJOUTER UN AMI" name="ami" type="text">
+            <input type="submit">
+        </fieldset>
+    </form>
     <div>
         Dernière connection : ${userConnection}
     </div>
     
+    <h1>CHANGER IMAGE PROFIL </h1>
+    
     <form class="changeImg" id="changeImg" method="POST" action="testCanvas.htm" enctype="multipart/form-data">
         <div id="custom-board" class="dessin"></div>
+        <input id ="hidden_data_canvas" name="hidden_data" type="hidden"/>
+        <input type="submit">
+    </form>
+    
+    <h1> ECRIRE MESSAGE </h1>
+    
+    <form class="writeMessage" id="writeMessage" method="POST" action="sendMessage.htm" enctype="multipart/form-data">
+        <div id="writeMessageBoard" class="dessin"></div>
         <input id ="hidden_data_canvas" name="hidden_data" type="hidden"/>
         <input type="submit">
     </form>
