@@ -26,6 +26,7 @@
                     <h3 class="panel-title">Register</h3>
                 </div>
                 <div class="panel-body">
+                    ${registerMessage}
                     <form accept-charset="UTF-8" role="form" method="POST" ACTION="register.htm">
                         <fieldset>
                             <div class="form-group">

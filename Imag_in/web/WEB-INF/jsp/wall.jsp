@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/drawingboard.min.css">
+    <link rel="stylesheet" href="css/imagin.css">
+    <script type="text/javascript" src="js/drawing.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/drawingboard.js"></script>
     <style>
         html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
     </style>
@@ -45,8 +50,18 @@
       <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
     </div>
     
+    <h1> Mur </h1>
+    <div>
+        ${profilPict}
+    </div>
     
+    <h1> Liste amis </h1>
     
+    ${friends}
+    
+    <h1> Liste messages </h1>
+    
+    <h1> Liste notifications </h1>
     
     <div>
         <b>User : ${userName}</b>
@@ -69,15 +84,28 @@
     </div>
     
     <div>
+        Dernière connection : ${userConnection}
+    </div>
+    
+    <form class="changeImg" id="changeImg" method="POST" action="testCanvas.htm" enctype="multipart/form-data">
+        <div id="custom-board" class="dessin"></div>
+        <input id ="hidden_data_canvas" name="hidden_data" type="hidden"/>
+        <input type="submit">
+    </form>
+    <div>
+        <b>Messages :</b>
+    </div>
+    <div>
+        ${messages}
+    </div>
+    <div>
         <b>Amis :</b>
     </div>
-    <div>
+    <div>   
         ${amis}
     </div>
-    <div>
-        <img class="" id="" src="data:${Extension};base64,${ProfilPic}" alt="">
-    </div>
-    <div> Ajouter une image de profil </div>
+    
+    <h1> Changer image de profil </h1>
     <form method = "POST" action="addProfilPict.htm" enctype="multipart/form-data" >
         <input type="file" id="profil_pic" name="profil_pic">
         <input type="submit">

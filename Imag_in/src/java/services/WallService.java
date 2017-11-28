@@ -29,6 +29,24 @@ public class WallService {
         mv.addObject("profileName",profile.getEmail());
         mv.addObject("profileConnection",profile.getLastConnection());
         
+        if (currentUser.getProfilePic() == null) {
+            mv.addObject("profilPict","<img src=\"img/profil.png\">");
+        }
+        else {
+            if (currentUser.getPictureType().equals("base")) {
+                mv.addObject("profilPict","<img src=\"img/profil.png\">");
+            }
+            else if (currentUser.getPictureType().equals("picture")) {
+                currentUser.setBase64Profil(Base64.getEncoder().encodeToString(currentUser.getProfilePic()));
+                mv.addObject("profilPict", "<img class=\"\" id=\"\" src=\"data:" + currentUser.getExtprofil() + ";base64," + currentUser.getBase64Profil() + "\" alt=\"avatar\">");
+            }
+            else if (currentUser.getPictureType().equals("drawing")) {
+                 byte[] decodedBytes = Base64.getDecoder().decode(currentUser.getProfilePic());
+                currentUser.setBase64Profil(new String(decodedBytes));
+                mv.addObject("profilPict", "<img class=\"\" id=\"\" src=\"data:" + currentUser.getExtprofil() + ";base64," + currentUser.getBase64Profil() + "\" alt=\"avatar\">");
+            }
+        }
+        
         List<MessageEntity> allCurrentUserMessage = this.uDao.findMessages(profile);
         String message = "<p>Liste des messages :</p>\n";
         
@@ -56,25 +74,7 @@ public class WallService {
             message = message + "<div>" + us.getId() + "</div>";
         }
         
-        mv.addObject("amis",message);
-        
-        if (currentUser.getProfilePic() == null) {
-            System.out.println("pas d'image de profil pour l'utilisateur");
-        }
-        else {
-            currentUser.setBase64Profil(Base64.getEncoder().encodeToString(currentUser.getProfilePic()));
-            mv.addObject("UserPic", currentUser.getBase64Profil());
-            mv.addObject("UserExtension", currentUser.getExtprofil());
-        }
-        if (profile.getProfilePic() == null) {
-            System.out.println("pas d'image de profil pour ce mur");
-        }
-        else {
-            profile.setBase64Profil(Base64.getEncoder().encodeToString(currentUser.getProfilePic()));
-            mv.addObject("ProfilPic", profile.getBase64Profil());
-            mv.addObject("ProfilExtension", profile.getExtprofil());
-        }
-        
+        mv.addObject("amis",message);      
         return mv;
     }
 }
