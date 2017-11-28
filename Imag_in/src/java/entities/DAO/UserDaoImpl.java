@@ -4,8 +4,10 @@ import entities.MessageEntity;
 import entities.UserEntity;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import org.apache.derby.client.am.SqlException;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +35,7 @@ public class UserDaoImpl implements UserDao {
    
     @Override
     @Transactional
-    public void save(UserEntity u)
+    public void save(UserEntity u) throws SqlException
     {
         u = em.merge(u);
         em.persist(u);
@@ -65,7 +67,13 @@ public class UserDaoImpl implements UserDao {
     @Transactional
     public UserEntity findByMail(String mail) {
         TypedQuery<UserEntity> query = this.em.createQuery("SELECT u FROM UserEntity u WHERE u.email = :mail",UserEntity.class);
-        return query.setParameter("mail",mail).getSingleResult();
+        
+        try {
+            return query.setParameter("mail",mail).getSingleResult();
+        }
+        catch (NoResultException nre) {
+            return null;
+        }      
     }
 
     @Override

@@ -50,6 +50,9 @@ public class UserEntity implements Serializable {
     @Column(name="extprofil")
     private String extprofil;
     
+    @Column
+    private String pictureType;
+    
     @Transient
     private String base64Profil;
     
@@ -69,6 +72,7 @@ public class UserEntity implements Serializable {
         this.email = "test@imagin.com";
         this.messages = new ArrayList<>();
         this.friends = new ArrayList<>();
+        this.pictureType = "base";
     }
     
     public UserEntity(String mail,String password) {
@@ -78,6 +82,7 @@ public class UserEntity implements Serializable {
         this.email = mail;
         this.messages = new ArrayList<>();
         this.friends = new ArrayList<>();
+        this.pictureType = "base";
     }
 
     public static long getSerialVersionUID() {
@@ -133,6 +138,7 @@ public class UserEntity implements Serializable {
     }
     
     
+    
     public void addFriend(UserEntity u) {
         this.friends.add(u);
     }
@@ -172,4 +178,14 @@ public class UserEntity implements Serializable {
     public void setBase64Profil(String base64Profil) {
         this.base64Profil = base64Profil;
     }
+
+    public String getPictureType() {
+        return pictureType;
+    }
+
+    public void setPictureType(String pictureType) {
+        this.pictureType = pictureType;
+    }
+    
+    
 }

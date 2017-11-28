@@ -23,10 +23,25 @@ public class WallService {
     public ModelAndView loadWall (HttpServletRequest request) {
         
         UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");
-        
         ModelAndView mv = new ModelAndView("wall");
-        mv.addObject("userName",currentUser.getEmail());
-        mv.addObject("userConnection",currentUser.getLastConnection());
+        
+        if (currentUser.getProfilePic() == null) {
+            mv.addObject("profilPict","<img src=\"img/profil.png\">");
+        }
+        else {
+            if (currentUser.getPictureType().equals("base")) {
+                mv.addObject("profilPict","<img src=\"img/profil.png\">");
+            }
+            else if (currentUser.getPictureType().equals("picture")) {
+                currentUser.setBase64Profil(Base64.getEncoder().encodeToString(currentUser.getProfilePic()));
+                mv.addObject("profilPict", "<img class=\"\" id=\"\" src=\"data:" + currentUser.getExtprofil() + ";base64," + currentUser.getBase64Profil() + "\" alt=\"avatar\">");
+            }
+            else if (currentUser.getPictureType().equals("drawing")) {
+                 byte[] decodedBytes = Base64.getDecoder().decode(currentUser.getProfilePic());
+                currentUser.setBase64Profil(new String(decodedBytes));
+                mv.addObject("profilPict", "<img class=\"\" id=\"\" src=\"data:" + currentUser.getExtprofil() + ";base64," + currentUser.getBase64Profil() + "\" alt=\"avatar\">");
+            }
+        }
         
         List<MessageEntity> allCurrentUserMessage = this.uDao.findMessages(currentUser);
         String message = "";
@@ -48,17 +63,7 @@ public class WallService {
             message = message + "<div>" + us.getId() + "</div>";
         }
         
-        mv.addObject("amis",message);
-        
-        if (currentUser.getProfilePic() == null) {
-            System.out.println("pas d'image de profil");
-        }
-        else {
-            currentUser.setBase64Profil(Base64.getEncoder().encodeToString(currentUser.getProfilePic()));
-            mv.addObject("ProfilPic", currentUser.getBase64Profil());
-            mv.addObject("Extension", currentUser.getExtprofil());
-        }
-        
+        mv.addObject("amis",message);      
         return mv;
     }
 }

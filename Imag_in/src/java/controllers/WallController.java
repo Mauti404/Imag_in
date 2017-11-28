@@ -5,8 +5,7 @@ import entities.DAO.UserDao;
 import entities.MessageEntity;
 import entities.UserEntity;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Base64;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +76,6 @@ public class WallController {
         
         
         UserEntity find2 = this.uDao.find(1);
-        System.out.println("friend : " + find2.getFriends().size());
         
         return this.wallService.loadWall(request);
     }
@@ -90,9 +88,6 @@ public class WallController {
         UserEntity friend = this.uDao.find(Integer.parseInt(request.getParameter("friend")));
         currentUser.removeFriend(friend.getId());
         friend.removeFriend(currentUser.getId());
-        
-        System.out.println("current " + currentUser.getId() + " nb friends : " + currentUser.getFriends().size());
-        System.out.println("friend " + friend.getId() + " nb friends : " + friend.getFriends().size());
         
         this.uDao.update(currentUser);
         this.uDao.update(friend);
@@ -110,10 +105,26 @@ public class WallController {
             currentUser.setProfilePic((byte[]) file.getBytes());
         } catch (IOException ex) {
             /* ERREUR A GERER */
+            System.out.println("erreur");
         }
         currentUser.setExtprofil(file.getContentType());
-        
+        currentUser.setPictureType("picture");
         this.uDao.update(currentUser);
+        
+        return this.wallService.loadWall(request);
+    }
+    
+    @RequestMapping(value="testCanvas", method=RequestMethod.POST)
+    public ModelAndView testCanvas(HttpServletRequest request, HttpServletResponse reponse)
+    {
+        
+        UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
+        
+        byte[] encodedBytes = Base64.getEncoder().encode(request.getParameter("hidden_data").substring(22).getBytes());
+        currentUser.setProfilePic(encodedBytes);
+        currentUser.setPictureType("drawing");
+        this.uDao.update(currentUser);
+        
         
         return this.wallService.loadWall(request);
     }
