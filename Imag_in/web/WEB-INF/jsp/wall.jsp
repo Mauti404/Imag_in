@@ -23,7 +23,7 @@
       <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
       <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Logo</a>
       <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
-      <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
+      <a href="getFriendsList.htm" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Friends"><i class="fa fa-user"></i></a>
       <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
       <div class="w3-dropdown-hover w3-hide-small">
         <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>     
@@ -50,32 +50,12 @@
     
     <div>
         <b>User : ${userName}</b>
+        <br/>
+        <b>watch the profile of : ${profileName}</b>
     </div>
+    
     <div>
-        
-        
-        
-        <form accept-charset="UTF-8" role="form" method="POST" ACTION="removeMessage.htm">
-            <fieldset>
-                <input placeholder="message" name="message" type="text">
-                <input type="submit">
-            </fieldset>
-        </form>
-        <form accept-charset="UTF-8" role="form" method="POST" ACTION="addFriend.htm">
-            <fieldset>
-                <input placeholder="friend" name="friend" type="text">
-                <input type="submit">
-            </fieldset>
-        </form>
-        <form accept-charset="UTF-8" role="form" method="POST" ACTION="removeFriend.htm">
-            <fieldset>
-                <input placeholder="friend" name="friend" type="text">
-                <input type="submit">
-            </fieldset>
-        </form>
-    </div>
-    <div>
-        Dernière connection : ${userConnection}
+        Dernière connection : ${profileConnection}
     </div>
     <div>
         <b>Messages :</b>

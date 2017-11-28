@@ -27,7 +27,7 @@ public class WallService {
         ModelAndView mv = new ModelAndView("wall");
         mv.addObject("userName",currentUser.getEmail());
         mv.addObject("profileName",profile.getEmail());
-        mv.addObject("userConnection",profile.getLastConnection());
+        mv.addObject("profileConnection",profile.getLastConnection());
         
         List<MessageEntity> allCurrentUserMessage = this.uDao.findMessages(profile);
         String message = "<p>Liste des messages :</p>\n";
