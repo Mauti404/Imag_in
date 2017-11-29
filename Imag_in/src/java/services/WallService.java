@@ -24,7 +24,8 @@ public class WallService {
         
         UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");//the connected user
         UserEntity profile = (UserEntity) request.getSession().getAttribute("profile");//the wall user
-        ModelAndView mv = new ModelAndView("wall");
+        ModelAndView mv = new ModelAndView("base");
+        mv.addObject("pageName","wall");
         mv.addObject("userName",currentUser.getEmail());
         mv.addObject("profileName",profile.getEmail());
         mv.addObject("profileConnection",profile.getLastConnection());
