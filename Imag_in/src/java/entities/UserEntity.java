@@ -154,6 +154,16 @@ public class UserEntity implements Serializable {
         
         this.friends.remove(toRemove);
     }
+    
+    public boolean findFriendById(int friendId) {
+        for (UserEntity ue : this.friends) {
+            if (ue.getId() == friendId) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 
     public byte[] getProfilePic() {
         return profilePic;
