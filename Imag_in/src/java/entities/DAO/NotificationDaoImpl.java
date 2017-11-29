@@ -53,6 +53,13 @@ public class NotificationDaoImpl implements NotificationDao{
     
     @Override
     @Transactional
+    public NotificationEntity find(int id) {
+        NotificationEntity m = em.find(NotificationEntity.class, id);
+        return m;
+    }
+    
+    @Override
+    @Transactional
     public List<NotificationEntity> findNotificationByUser(UserEntity user) {
         TypedQuery<NotificationEntity> query = this.em.createQuery("SELECT n FROM NotificationEntity n WHERE n.target = :user ",NotificationEntity.class);
         return query.setParameter("user",user).getResultList();

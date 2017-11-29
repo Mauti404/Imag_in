@@ -46,7 +46,6 @@ public class WallController {
         UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
         UserEntity profileUser = (UserEntity)request.getSession().getAttribute("profile");
         MessageEntity message = new MessageEntity(currentUser,profileUser);
-        System.out.println("message 0 : " + message.getId());
         // on encode l'image dans content
         byte[] encodedBytes = Base64.getEncoder().encode(request.getParameter("hidden_data").substring(22).getBytes());
         message.setContent(encodedBytes);
@@ -56,21 +55,21 @@ public class WallController {
         // on pousse le message sur la bdd
         this.mDao.save(message);
         // on créé la notification
-        System.out.println("message 1 : " + message.getId());
         NotificationEntity notif = new NotificationEntity(profileUser,message);
         profileUser.addNotification(notif);
         this.nDao.save(notif);
-        System.out.println("message 2 : " + message.getId());
         List<NotificationEntity> notifs = this.nDao.findNotificationByUser(profileUser);
         
         for (NotificationEntity ne : notifs) {
             System.out.println("ne : " + ne.getTarget().getEmail());
-        }        
+        }
+        
+        
        
         return this.wallService.loadWall(request);
     }
     
-    @RequestMapping(value="removeMessage", method=RequestMethod.POST)
+    @RequestMapping(value="removeMessage", method=RequestMethod.POST)   
     public ModelAndView removeMessage(HttpServletRequest request, HttpServletResponse reponse)
     {        
         return this.wallService.loadWall(request);
@@ -133,6 +132,20 @@ public class WallController {
     
     @RequestMapping(value="testCanvas", method=RequestMethod.POST)
     public ModelAndView testCanvas(HttpServletRequest request, HttpServletResponse reponse)
+    {
+        
+        UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
+        
+        byte[] encodedBytes = Base64.getEncoder().encode(request.getParameter("hidden_data").substring(22).getBytes());
+        currentUser.setProfilePic(encodedBytes);
+        currentUser.setPictureType("drawing");
+        this.uDao.update(currentUser);
+        
+        return this.wallService.loadWall(request);
+    }
+    
+    @RequestMapping(value="testCanvas", method=RequestMethod.POST)
+    public ModelAndView visit(HttpServletRequest request, HttpServletResponse reponse)
     {
         
         UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
