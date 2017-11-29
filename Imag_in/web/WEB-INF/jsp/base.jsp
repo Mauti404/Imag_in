@@ -1,11 +1,11 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
 <!DOCTYPE html>
 <HTML>
 <HEAD>
-    <TITLE> Imag'In </TITLE>
+    <TITLE> ${pageName} </TITLE>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -54,20 +54,9 @@
             </div>  
          </div>
          <div class="w3-col s8 w3-center w3-grey">
-             <h1  >Mur</h1>
+             <h1>${pageName}</h1>
              <hr/>
-             <h2> Ecrire un message :</h2>
-             <div>
-                 <form class="changeImg" id="changeImg" method="POST" action="sendMessage.htm" enctype="multipart/form-data">
-                    <div id="custom-board" class="message"></div>
-                    <input id ="hidden_data_canvas" name="imageMassage" type="hidden"/>
-                    <input type="submit">
-                 </form>    
-             </div>
-             <h2> Liste messages :</h2>
-             <div>
-                ${messagesList}
-             </div>
+             <jsp:include page="${pageName}.jsp"/>
          </div>    
     </div>
 </BODY>
