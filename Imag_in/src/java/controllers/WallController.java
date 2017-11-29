@@ -26,10 +26,7 @@ import services.WallService;
  */
 
 @Controller
-public class WallController {
-
-    @Autowired
-    private UserDao uDao;
+public class WallController extends baseController {
 
     @Autowired
     private MessageDao mDao;
@@ -75,42 +72,9 @@ public class WallController {
         return this.wallService.loadWall(request);
     }
     
-    @RequestMapping(value="addFriend", method=RequestMethod.POST)
-    public ModelAndView addFriend(HttpServletRequest request, HttpServletResponse reponse)
-    {
-        
-        UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
-        UserEntity friend = this.uDao.find(Integer.parseInt(request.getParameter("ami")));
-        currentUser.addFriend(friend);
-        friend.addFriend(currentUser);
-        
-        try {
-            this.uDao.update(currentUser);
-        }
-        catch (IllegalStateException ise) {
-            System.out.println("ERREUR A GERER : Déjà ami");
-        }
-        
-        UserEntity find2 = this.uDao.find(1);
-        
-        return this.wallService.loadWall(request);
-    }
     
-    @RequestMapping(value="removeFriend", method=RequestMethod.POST)
-    public ModelAndView removeFriend(HttpServletRequest request, HttpServletResponse reponse)
-    {
-        
-        UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
-        UserEntity friend = this.uDao.find(Integer.parseInt(request.getParameter("friend")));
-        currentUser.removeFriend(friend.getId());
-        friend.removeFriend(currentUser.getId());
-        
-        this.uDao.update(currentUser);
-        this.uDao.update(friend);
-        
-        return this.wallService.loadWall(request);
-    }
     
+    //move to account
     @RequestMapping(value="addProfilPict", method=RequestMethod.POST)
     public ModelAndView addProfilPict(HttpServletRequest request, HttpServletResponse reponse,@RequestParam("profil_pic") MultipartFile file)
     {
