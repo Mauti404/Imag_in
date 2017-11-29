@@ -33,7 +33,8 @@ public class FriendsController {
     
     @RequestMapping(value="getFriendsList", method=RequestMethod.POST)
     public ModelAndView getFriendsList(HttpServletRequest request, HttpServletResponse reponse,@RequestParam("profil_pic") MultipartFile file)
-    {        
+    {   
+        //todo
         UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");
         UserEntity profileUser = (UserEntity) request.getSession().getAttribute("profile");
         
@@ -47,7 +48,7 @@ public class FriendsController {
         message.setExtContent(file.getContentType());
         currentUser.addMessage(message);
         this.uDao.update(currentUser);
-        ModelAndView mv = new ModelAndView("base");
+        ModelAndView mv = this.friendsService.loadFriends(request);
         
         return mv;
     }
