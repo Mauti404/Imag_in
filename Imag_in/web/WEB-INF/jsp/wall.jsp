@@ -1,8 +1,8 @@
 <h2> Ecrire un message :</h2>
 <div>
-    <form class="changeImg" id="changeImg" method="POST" action="sendMessage.htm" enctype="multipart/form-data">
-       <div id="custom-board" class="message"></div>
-       <input id ="hidden_data_canvas" name="imageMassage" type="hidden"/>
+    <form class="writeMessage" id="writeMessage" method="POST" action="sendMessage.htm" enctype="multipart/form-data">
+       <div id="writeMessageBoard" class="message"></div>
+       <input id ="hidden_data_canvas" name="hidden_data" type="hidden"/>
        <input type="submit">
     </form>    
 </div>

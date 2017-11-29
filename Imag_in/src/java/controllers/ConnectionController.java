@@ -9,15 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import entities.DAO.UserDao;
 import entities.UserEntity;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
-import org.apache.derby.client.am.SqlException;
 import services.WallService;
 
 /**
  *
- * @author mauti
+ * @author M. Durand
  */
 
 @Controller

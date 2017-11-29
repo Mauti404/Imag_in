@@ -6,10 +6,6 @@ import entities.MessageEntity;
 import entities.UserEntity;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +19,7 @@ import services.WallService;
 
 /**
  *
- * @author mauti
+ * @author M. Durand
  */
 
 @Controller
