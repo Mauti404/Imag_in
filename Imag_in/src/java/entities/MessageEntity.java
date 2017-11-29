@@ -1,14 +1,17 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 /**
@@ -43,6 +46,10 @@ public class MessageEntity implements Serializable {
     @JoinColumn(name="sender")
     private UserEntity sender;
     
+    /*
+    @OneToOne (mappedBy="message",cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+    private NotificationEntity notification;
+    */
     @Column
     private String pictureType;
 
@@ -109,10 +116,19 @@ public class MessageEntity implements Serializable {
     public void setPictureType(String pictureType) {
         this.pictureType = pictureType;
     }
-    
-    
-    
-    
+    /*
+    public NotificationEntity getNotification() {
+        return notification;
+    }
+
+    public void setNotification(NotificationEntity notification) {
+        this.notification = notification;
+    }
+    */
+
+    public void setId(int id) {
+        this.id = id;
+    }
     
     
 }

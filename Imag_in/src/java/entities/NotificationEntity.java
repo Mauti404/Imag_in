@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,8 +24,9 @@ public class NotificationEntity implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
-    @OneToOne
-    @JoinColumn(name="messageId")
+    
+    @OneToOne (cascade={CascadeType.ALL})
+    @JoinColumn(name="message")
     private MessageEntity message;
     
     @ManyToOne
@@ -35,9 +37,9 @@ public class NotificationEntity implements Serializable {
         
     }
     
-    public NotificationEntity(UserEntity target,MessageEntity message) {
-        this.message = message;
+    public NotificationEntity(UserEntity target, MessageEntity mes) {
         this.target = target;
+        this.message = mes;
     }
     
     
@@ -48,7 +50,7 @@ public class NotificationEntity implements Serializable {
     public int getId() {
         return id;
     }
-
+    
     public MessageEntity getMessage() {
         return message;
     }
@@ -56,6 +58,12 @@ public class NotificationEntity implements Serializable {
     public void setMessage(MessageEntity message) {
         this.message = message;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    
 
     public UserEntity getTarget() {
         return target;

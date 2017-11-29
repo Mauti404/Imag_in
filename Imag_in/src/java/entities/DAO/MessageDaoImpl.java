@@ -34,9 +34,10 @@ public class MessageDaoImpl implements MessageDao {
 
     @Override
     @Transactional
-    public void save(MessageEntity m) {
-        m = em.merge(m);
-        em.persist(m);
+    public void save(MessageEntity mOld) {
+        MessageEntity mNew = em.merge(mOld);
+        em.persist(mNew);
+        mOld.setId(mNew.getId());
     }
 
     @Override

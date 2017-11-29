@@ -65,6 +65,9 @@ public class UserEntity implements Serializable {
     @OneToMany (mappedBy="sender",cascade=CascadeType.ALL,fetch = FetchType.EAGER)
     private List<MessageEntity> messages;
     
+    @OneToMany (mappedBy="target",cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<NotificationEntity> notifications;
+    
     public UserEntity() {
         this.password = "mot de passe";
         this.lastConnection = "today";
@@ -135,9 +138,7 @@ public class UserEntity implements Serializable {
     
     public void removeMessage(MessageEntity m) {        
         this.messages.remove(m);
-    }
-    
-    
+    }    
     
     public void addFriend(UserEntity u) {
         this.friends.add(u);
@@ -153,6 +154,14 @@ public class UserEntity implements Serializable {
         }
         
         this.friends.remove(toRemove);
+    }
+    
+    public void addNotification(NotificationEntity ne) {
+        this.notifications.add(ne);
+    }
+    
+    public void removeNotification(NotificationEntity ne) {
+        this.notifications.remove(ne);
     }
     
     public boolean findFriendById(int friendId) {
@@ -177,6 +186,10 @@ public class UserEntity implements Serializable {
         return base64Profil;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public void setProfilePic(byte[] profilePic) {
         this.profilePic = profilePic;
     }
@@ -196,6 +209,12 @@ public class UserEntity implements Serializable {
     public void setPictureType(String pictureType) {
         this.pictureType = pictureType;
     }
+
+    public List<NotificationEntity> getNotifications() {
+        return notifications;
+    }
+    
+    
     
     
 }

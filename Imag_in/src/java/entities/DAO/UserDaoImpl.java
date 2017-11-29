@@ -35,10 +35,11 @@ public class UserDaoImpl implements UserDao {
    
     @Override
     @Transactional
-    public void save(UserEntity u) throws SqlException
+    public void save(UserEntity uOld) throws SqlException
     {
-        u = em.merge(u);
-        em.persist(u);
+        UserEntity uNew = em.merge(uOld);
+        em.persist(uNew);
+        uOld.setId(uNew.getId());
     }
     
     @Override
