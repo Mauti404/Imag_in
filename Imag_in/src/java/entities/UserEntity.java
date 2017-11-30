@@ -214,7 +214,18 @@ public class UserEntity implements Serializable {
         return notifications;
     }
     
-    
+    public void removeMessageById(int idMessage) {
+        MessageEntity toRemove = null;
+        for (MessageEntity mes : this.messages) {
+            if (mes.getId() == idMessage) {
+                toRemove = mes;
+            }
+        }
+        
+        if (toRemove != null) {
+            this.messages.remove(toRemove);
+        }
+    }
     
     
 }

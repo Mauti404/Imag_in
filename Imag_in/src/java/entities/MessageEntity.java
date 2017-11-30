@@ -32,7 +32,7 @@ public class MessageEntity implements Serializable {
     @Column
     private byte[] content;
     
-    @Column(name="extprofil")
+    @Column(name="extContent")
     private String extContent;
     
     @Transient
@@ -46,10 +46,6 @@ public class MessageEntity implements Serializable {
     @JoinColumn(name="sender")
     private UserEntity sender;
     
-    /*
-    @OneToOne (mappedBy="message",cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-    private NotificationEntity notification;
-    */
     @Column
     private String pictureType;
 

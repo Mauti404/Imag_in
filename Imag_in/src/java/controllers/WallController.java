@@ -1,14 +1,15 @@
 package controllers;
 
 import entities.DAO.MessageDao;
+import entities.DAO.MessageDaoImpl;
 import entities.DAO.NotificationDao;
-import entities.DAO.UserDao;
 import entities.MessageEntity;
 import entities.NotificationEntity;
 import entities.UserEntity;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class WallController extends baseController {
         UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
         UserEntity profileUser = (UserEntity)request.getSession().getAttribute("profile");
         MessageEntity message = new MessageEntity(currentUser,profileUser);
+        
         // on encode l'image dans content
         byte[] encodedBytes = Base64.getEncoder().encode(request.getParameter("hidden_data").substring(22).getBytes());
         message.setContent(encodedBytes);
@@ -55,25 +57,10 @@ public class WallController extends baseController {
         NotificationEntity notif = new NotificationEntity(profileUser,message);
         profileUser.addNotification(notif);
         this.nDao.save(notif);
-        List<NotificationEntity> notifs = this.nDao.findNotificationByUser(profileUser);
-        
-        for (NotificationEntity ne : notifs) {
-            System.out.println("ne : " + ne.getTarget().getEmail());
-        }
-        
-        
        
         return this.wallService.loadWall(request);
     }
-    
-    @RequestMapping(value="removeMessage", method=RequestMethod.POST)   
-    public ModelAndView removeMessage(HttpServletRequest request, HttpServletResponse reponse)
-    {        
-        return this.wallService.loadWall(request);
-    }
-    
-    
-    
+        
     //move to account
     @RequestMapping(value="addProfilPict", method=RequestMethod.POST)
     public ModelAndView addProfilPict(HttpServletRequest request, HttpServletResponse reponse,@RequestParam("profil_pic") MultipartFile file)
@@ -104,21 +91,6 @@ public class WallController extends baseController {
         currentUser.setProfilePic(encodedBytes);
         currentUser.setPictureType("drawing");
         this.uDao.update(currentUser);
-        
-        return this.wallService.loadWall(request);
-    }
-    
-    @RequestMapping(value="testCanvas", method=RequestMethod.POST)
-    public ModelAndView visit(HttpServletRequest request, HttpServletResponse reponse)
-    {
-        
-        UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
-        
-        byte[] encodedBytes = Base64.getEncoder().encode(request.getParameter("hidden_data").substring(22).getBytes());
-        currentUser.setProfilePic(encodedBytes);
-        currentUser.setPictureType("drawing");
-        this.uDao.update(currentUser);
-        
         
         return this.wallService.loadWall(request);
     }

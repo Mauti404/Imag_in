@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 
 /**
  *
- * @author mauti
+ * @author M. Durand
  */
 
 @Entity
