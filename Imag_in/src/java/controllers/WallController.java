@@ -1,15 +1,13 @@
 package controllers;
 
 import entities.DAO.MessageDao;
-import entities.DAO.MessageDaoImpl;
 import entities.DAO.NotificationDao;
+import entities.DAO.UserDao;
 import entities.MessageEntity;
 import entities.NotificationEntity;
 import entities.UserEntity;
 import java.io.IOException;
 import java.util.Base64;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
