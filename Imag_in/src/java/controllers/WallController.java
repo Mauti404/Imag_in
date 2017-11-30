@@ -27,7 +27,7 @@ import services.WallService;
  */
 
 @Controller
-public class WallController extends baseController {
+public class WallController {
 
     @Autowired
     private MessageDao mDao;
@@ -37,6 +37,9 @@ public class WallController extends baseController {
     
     @Autowired 
     private WallService wallService;
+    
+    @Autowired
+    private UserDao uDao;
     
     @RequestMapping(value="sendMessage", method=RequestMethod.POST)
     public ModelAndView postMessageToWall(HttpServletRequest request, HttpServletResponse reponse)
