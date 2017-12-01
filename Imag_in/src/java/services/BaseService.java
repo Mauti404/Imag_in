@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author echo
  */
+
 @Service
 public class BaseService {
     
@@ -63,6 +64,11 @@ public class BaseService {
                 currentUser.setBase64Profil(new String(decodedBytes));
                 mv.addObject("visitedProfilePict", "src=\"data:" + currentUser.getExtprofil() + ";base64," + currentUser.getBase64Profil() + "\" alt=\"avatar\"");
             }
+        }
+        
+        //loading button
+        if ((currentUser.getId() != profile.getId()) && (!currentUser.isFriend(profile))) {
+            mv.addObject("addFriendButton","<form method=\"POST\" action=\"addFriend.htm\" ><button btn class=\"btn-primary\" type=\"submit\" value=\"Ajouter\" /><input name=\"ami\" type=\"hidden\" value=\"" + profile.getId() + "\" /></form>");
         }
         
         return mv;

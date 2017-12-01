@@ -35,7 +35,10 @@
           <input type="image" title="My Account" ${userProfilePict} class="w3-circle" style="height:30px;width:30px"/>
          </form> 
       <a href="#" class="w3-bar-item w3-button  w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
-      <a href="getFriendsList.htm" class="w3-bar-item w3-button  w3-padding-large w3-hover-white" title="Friends"><i class="fa fa-user"></i></a>
+        <!--<a href="getFriendsList.htm" class="w3-bar-item w3-button  w3-padding-large w3-hover-white" title="Friends"><i class="fa fa-user"></i></a> -->
+    <form class="w3-bar-item w3-button w3-padding-large w3-theme-d4" method="POST" action="getFriendsList.htm">
+        <input type="image" title="Amis" class="fa fa-user"  style="height:30px;width:30px"/>
+    </form>    
       <a href="#" class="w3-bar-item w3-button  w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
       <div class="w3-dropdown-hover ">
         <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>     
@@ -51,7 +54,10 @@
       
      </div>
     
-    
+    <form method="POST" action="addFriend.htm">
+         <input name="ami" type="text">
+         <input type="submit"/>
+    </form>
     <div class="w3-row-padding"  >
          <div class="w3-circle w3-col s2">
             <img ${visitedProfilePict} style="width:100%"/>
@@ -62,7 +68,8 @@
                 <div>
                     Dernière connection : ${profileConnection}
                 </div>
-            </div>  
+            </div>
+         ${addFriendButton}
          </div>
          <div class="w3-col s8 w3-center w3-grey">
              <h1>${pageName}</h1>
