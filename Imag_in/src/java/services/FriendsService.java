@@ -17,8 +17,7 @@ public class FriendsService extends BaseService{
     public ModelAndView loadFriends (HttpServletRequest request) {
         
         UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");//the connected user
-        String newUser = request.getParameter("newUser");
-        UserEntity profile = udao.find(Integer.parseInt(newUser));
+        UserEntity profile = (UserEntity) request.getSession().getAttribute("profile");
         request.getSession().setAttribute("profile", profile);
         
         

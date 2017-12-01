@@ -48,21 +48,21 @@ public class BaseService {
             }
         }
         //profilePic
-        if (currentUser.getProfilePic() == null) {
+        if (profile.getProfilePic() == null) {
             mv.addObject("visitedProfilePict","src=\"img/profil.png\"");
         }
         else {
-            if (currentUser.getPictureType().equals("base")) {
+            if (profile.getPictureType().equals("base")) {
                 mv.addObject("visitedProfilePict","src=\"img/profil.png\"");
             }
-            else if (currentUser.getPictureType().equals("picture")) {
-                currentUser.setBase64Profil(Base64.getEncoder().encodeToString(currentUser.getProfilePic()));
-                mv.addObject("visitedProfilePict", "src=\"data:" + currentUser.getExtprofil() + ";base64," + currentUser.getBase64Profil() + "\" alt=\"avatar\"");
+            else if (profile.getPictureType().equals("picture")) {
+                profile.setBase64Profil(Base64.getEncoder().encodeToString(profile.getProfilePic()));
+                mv.addObject("visitedProfilePict", "src=\"data:" + profile.getExtprofil() + ";base64," + profile.getBase64Profil() + "\" alt=\"avatar\"");
             }
-            else if (currentUser.getPictureType().equals("drawing")) {
-                 byte[] decodedBytes = Base64.getDecoder().decode(currentUser.getProfilePic());
-                currentUser.setBase64Profil(new String(decodedBytes));
-                mv.addObject("visitedProfilePict", "src=\"data:" + currentUser.getExtprofil() + ";base64," + currentUser.getBase64Profil() + "\" alt=\"avatar\"");
+            else if (profile.getPictureType().equals("drawing")) {
+                byte[] decodedBytes = Base64.getDecoder().decode(profile.getProfilePic());
+                profile.setBase64Profil(new String(decodedBytes));
+                mv.addObject("visitedProfilePict", "src=\"data:" + profile.getExtprofil() + ";base64," + profile.getBase64Profil() + "\" alt=\"avatar\"");
             }
         }
         
