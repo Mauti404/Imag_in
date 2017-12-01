@@ -62,25 +62,17 @@ public class WallController {
         return this.wallService.loadWall(request);
     }
         
-    //move to account
-    @RequestMapping(value="addProfilPict", method=RequestMethod.POST)
-    public ModelAndView addProfilPict(HttpServletRequest request, HttpServletResponse reponse,@RequestParam("profil_pic") MultipartFile file)
-    {
-        
-        UserEntity currentUser = (UserEntity)request.getSession().getAttribute("user");
-        
-        try {
-            currentUser.setProfilePic((byte[]) file.getBytes());
-        } catch (IOException ex) {
-            /* ERREUR A GERER */
-            System.out.println("erreur");
-        }
-        currentUser.setExtprofil(file.getContentType());
-        currentUser.setPictureType("picture");
-        this.uDao.update(currentUser);
-        
+    
+    
+    @RequestMapping(value="removeMessage", method=RequestMethod.POST)
+    public ModelAndView removeMessage(HttpServletRequest request, HttpServletResponse reponse)
+    {        
         return this.wallService.loadWall(request);
     }
+    
+    
+    
+    
     
     @RequestMapping(value="testCanvas", method=RequestMethod.POST)
     public ModelAndView testCanvas(HttpServletRequest request, HttpServletResponse reponse)

@@ -24,7 +24,7 @@ public class BaseService {
     @Autowired
     protected UserDao uDao;
     
-    public ModelAndView loadPasePage (HttpServletRequest request) {
+    public ModelAndView loadBasePage (HttpServletRequest request) {
         
         UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");//the connected user
         UserEntity profile = (UserEntity) request.getSession().getAttribute("profile");//the wall user

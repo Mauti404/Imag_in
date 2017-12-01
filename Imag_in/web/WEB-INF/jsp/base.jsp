@@ -25,7 +25,15 @@
     <!-- Navbar -->
     
      <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
-      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Logo</a>
+         <form class="w3-bar-item w3-button w3-padding-large w3-theme-d4" method="POST" action="getAccount.htm" enctype="multipart/form-data">
+          <input type="image" title="Home" class="fa fa-home"  style="height:30px;width:30px"/>
+         </form> 
+         <form class="w3-bar-item w3-button  w3-right w3-padding-large w3-hover-white" method="POST" action="getAccount.htm" enctype="multipart/form-data">
+          <input type="image" title="My Account" ${userProfilePict} class="w3-circle" style="height:30px;width:30px"/>
+         </form> 
+         <form class="w3-bar-item w3-button  w3-right w3-padding-large w3-hover-white" method="POST" action="getAccount.htm" enctype="multipart/form-data">
+          <input type="image" title="My Account" ${userProfilePict} class="w3-circle" style="height:30px;width:30px"/>
+         </form> 
       <a href="#" class="w3-bar-item w3-button  w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
       <a href="getFriendsList.htm" class="w3-bar-item w3-button  w3-padding-large w3-hover-white" title="Friends"><i class="fa fa-user"></i></a>
       <a href="#" class="w3-bar-item w3-button  w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
@@ -37,7 +45,10 @@
           <a href="#" class="w3-bar-item w3-button">Jane likes your post</a>
         </div>
       </div>
-      <a href="#" class="w3-bar-item w3-button  w3-right w3-padding-large w3-hover-white" title="My Account"><img ${userProfilePict} class="w3-circle" style="height:30px;width:30px" /></a>
+      <form class="w3-bar-item w3-button  w3-right w3-padding-large w3-hover-white" method="POST" action="getAccount.htm" enctype="multipart/form-data">
+          <input type="image" title="My Account" ${userProfilePict} class="w3-circle" style="height:30px;width:30px">
+      </form> 
+      
      </div>
     
     

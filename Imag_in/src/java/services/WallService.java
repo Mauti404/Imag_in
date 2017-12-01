@@ -23,7 +23,7 @@ public class WallService extends BaseService{
         
         UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");//the connected user
         UserEntity profile = (UserEntity) request.getSession().getAttribute("profile");//the wall user
-        ModelAndView mv = this.loadPasePage(request);
+        ModelAndView mv = this.loadBasePage(request);
         mv.addObject("pageName","wall");
         
         
