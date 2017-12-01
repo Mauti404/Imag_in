@@ -17,4 +17,5 @@ public interface UserDao {
     public UserEntity findByMail(String mail);
     public List<MessageEntity> findMessages(UserEntity user);
     public List<UserEntity> findFriends(UserEntity user);
+    public List<UserEntity> findAllUsers();
 }

@@ -1,7 +1,6 @@
 package services;
 
 import entities.DAO.MessageDao;
-import entities.DAO.UserDao;
 import entities.MessageEntity;
 import entities.UserEntity;
 import java.util.Base64;

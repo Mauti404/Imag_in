@@ -90,4 +90,11 @@ public class UserDaoImpl implements UserDao {
         TypedQuery<UserEntity> query = this.em.createQuery("SELECT u FROM UserEntity u WHERE :user MEMBER OF u.friends",UserEntity.class);
         return query.setParameter("user",user).getResultList();
     }
+    
+    @Override
+    @Transactional
+    public List<UserEntity> findAllUsers() {
+        TypedQuery<UserEntity> query = this.em.createQuery("SELECT u FROM UserEntity u",UserEntity.class);
+        return query.getResultList();
+    }
 }
