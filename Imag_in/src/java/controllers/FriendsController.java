@@ -26,8 +26,6 @@ public class FriendsController {
     @Autowired
     private UserDao uDao;
 
-    
-    
     @Autowired 
     private FriendsService friendsService;
     
@@ -46,7 +44,7 @@ public class FriendsController {
         UserEntity friend = this.uDao.find(Integer.parseInt(request.getParameter("ami")));
         currentUser.addFriend(friend);
         friend.addFriend(currentUser);
-        
+        UserEntity profile = (UserEntity) request.getSession().getAttribute("profile");//the wall user
         try {
             this.uDao.update(currentUser);
         }

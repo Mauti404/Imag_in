@@ -27,6 +27,7 @@ public class BaseService {
         mv.addObject("userName",currentUser.getEmail());
         mv.addObject("profileName",profile.getEmail());
         mv.addObject("profileConnection",profile.getLastConnection());
+        mv.addObject("currentUserId",currentUser.getId());
         
         //userPic
         if (currentUser.getProfilePic() == null) {

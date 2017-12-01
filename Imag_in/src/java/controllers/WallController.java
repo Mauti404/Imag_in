@@ -58,9 +58,14 @@ public class WallController {
        
         return this.wallService.loadWall(request);
     }
-        
     
-    
+    @RequestMapping(value="getMessage", method=RequestMethod.POST)
+    public ModelAndView getMessage(HttpServletRequest request, HttpServletResponse reponse)
+    {
+        return this.wallService.loadWall(request);
+    }
+
+
     @RequestMapping(value="removeMessage", method=RequestMethod.POST)
     public ModelAndView removeMessage(HttpServletRequest request, HttpServletResponse reponse)
     {        
