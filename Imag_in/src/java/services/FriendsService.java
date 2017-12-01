@@ -24,7 +24,7 @@ public class FriendsService extends BaseService{
         for (UserEntity us : allCurrentUserFriend) {
             message = message + "<div>" + us.getId() + "</div>";
             
-            if(us.findFriendById(currentUser.getId())) {
+            if(us.isFriendById(currentUser.getId())) {
                 message += "<div>deja amis</div>";
             }
         }

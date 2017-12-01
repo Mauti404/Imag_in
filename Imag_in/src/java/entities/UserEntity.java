@@ -164,9 +164,19 @@ public class UserEntity implements Serializable {
         this.notifications.remove(ne);
     }
     
-    public boolean findFriendById(int friendId) {
+    public boolean isFriendById(int friendId) {
         for (UserEntity ue : this.friends) {
             if (ue.getId() == friendId) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean isFriend(UserEntity friend) {
+        for (UserEntity ue : this.friends) {
+            if (ue.getId() == friend.getId()) {
                 return true;
             }
         }

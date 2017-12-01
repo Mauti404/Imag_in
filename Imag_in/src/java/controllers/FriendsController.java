@@ -69,8 +69,6 @@ public class FriendsController {
             System.out.println("ERREUR A GERER : Déjà ami");
         }
         
-        UserEntity find2 = this.uDao.find(1);
-        
         return this.friendsService.loadFriends(request);
     }
     
