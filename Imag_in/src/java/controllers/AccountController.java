@@ -1,13 +1,9 @@
-package controllers;
+    package controllers;
 
-import entities.DAO.MessageDao;
 import entities.DAO.UserDao;
-import entities.MessageEntity;
 import entities.UserEntity;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import services.AccountService;
-import services.FriendsService;
 /**
  *
  * @author echo
@@ -27,8 +22,6 @@ import services.FriendsService;
 public class AccountController{
     @Autowired
     private UserDao uDao;
-
-    
     
     @Autowired 
     private AccountService accountService;

@@ -32,24 +32,9 @@ public class FriendsController {
     private FriendsService friendsService;
     
     @RequestMapping(value="getFriendsList", method=RequestMethod.POST)
-    public ModelAndView getFriendsList(HttpServletRequest request, HttpServletResponse reponse,@RequestParam("profil_pic") MultipartFile file)
+    public ModelAndView getFriendsList(HttpServletRequest request, HttpServletResponse reponse)
     {   
-        //todo
-        UserEntity currentUser = (UserEntity) request.getSession().getAttribute("user");
-        UserEntity profileUser = (UserEntity) request.getSession().getAttribute("profile");
-        
-        MessageEntity message = new MessageEntity(currentUser,currentUser);
-        try {
-            message.setContent((byte[]) file.getBytes());
-        } catch (IOException ex) {
-            /* A GERER */
-            System.out.println("Pas d'image");
-        }
-        message.setExtContent(file.getContentType());
-        currentUser.addMessage(message);
-        this.uDao.update(currentUser);
         ModelAndView mv = this.friendsService.loadFriends(request);
-        
         return mv;
     }
     
