@@ -51,7 +51,10 @@
       
      </div>
     
-    
+    <form method="POST" action="addFriend.htm">
+         <input name="ami" type="text">
+         <input type="submit"/>
+    </form>
     <div class="w3-row-padding"  >
          <div class="w3-circle w3-col s2">
             <img ${visitedProfilePict} style="width:100%"/>
@@ -62,7 +65,8 @@
                 <div>
                     Dernière connection : ${profileConnection}
                 </div>
-            </div>  
+            </div>
+         ${addFriendButton}
          </div>
          <div class="w3-col s8 w3-center w3-grey">
              <h1>${pageName}</h1>
