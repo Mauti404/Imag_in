@@ -77,7 +77,4 @@ public class FriendsService extends BaseService{
         
         return mv;
     }
-    
-    
-    
 }
