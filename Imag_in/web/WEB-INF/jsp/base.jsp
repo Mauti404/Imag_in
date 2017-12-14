@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -23,23 +24,19 @@
 </HEAD>
 <BODY class="w3-theme-l5">
     <!-- Navbar -->
-    
      <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
-         <form class="w3-bar-item w3-button w3-padding-large w3-theme-d4" method="POST" action="getAccount.htm" enctype="multipart/form-data">
-          <input type="image" title="Home" class="fa fa-home"  style="height:30px;width:30px"/>
+         <form class="w3-bar-item w3-button w3-padding-large w3-theme-d4 fa fa-home" method="POST" action="getMessage.htm">
+          <input  type="image" title="Home" />
+          <input type="hidden" name="newUser" value ="${currentUserId}"/>
          </form> 
-         <form class="w3-bar-item w3-button  w3-right w3-padding-large w3-hover-white" method="POST" action="getAccount.htm" enctype="multipart/form-data">
-          <input type="image" title="My Account" ${userProfilePict} class="w3-circle" style="height:30px;width:30px"/>
-         </form> 
-         <form class="w3-bar-item w3-button  w3-right w3-padding-large w3-hover-white" method="POST" action="getAccount.htm" enctype="multipart/form-data">
-          <input type="image" title="My Account" ${userProfilePict} class="w3-circle" style="height:30px;width:30px"/>
-         </form> 
-      <a href="#" class="w3-bar-item w3-button  w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
-        <!--<a href="getFriendsList.htm" class="w3-bar-item w3-button  w3-padding-large w3-hover-white" title="Friends"><i class="fa fa-user"></i></a> -->
-    <form class="w3-bar-item w3-button w3-padding-large w3-theme-d4" method="POST" action="getFriendsList.htm">
-        <input type="image" title="Amis" class="fa fa-user"  style="height:30px;width:30px"/>
-    </form>    
-      <a href="#" class="w3-bar-item w3-button  w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
+         <form class="w3-bar-item w3-button w3-padding-large w3-theme-d4 fa fa-globe" method="POST" action="getMessage.htm">
+          <input type="image" title="Nothing"/>
+         </form>
+         <form class="w3-bar-item w3-button w3-padding-large w3-theme-d4 fa fa-user " method="POST" action="getFriendsList.htm">
+          <input type="image" title="Friends"/>
+         </form>
+        
+      
       <div class="w3-dropdown-hover ">
         <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>     
         <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">

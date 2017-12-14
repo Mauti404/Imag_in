@@ -58,9 +58,16 @@ public class WallController {
        
         return this.wallService.loadWall(request);
     }
-        
     
-    
+    @RequestMapping(value="getMessage", method=RequestMethod.POST)
+    public ModelAndView getMessage(HttpServletRequest request, HttpServletResponse reponse)
+    {
+        String newUser = request.getParameter("newUser");
+        request.getSession().setAttribute("profile",uDao.find(Integer.parseInt(newUser)));
+        return this.wallService.loadWall(request);
+    }
+
+
     @RequestMapping(value="removeMessage", method=RequestMethod.POST)
     public ModelAndView removeMessage(HttpServletRequest request, HttpServletResponse reponse)
     {        
